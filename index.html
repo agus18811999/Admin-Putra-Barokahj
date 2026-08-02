@@ -1145,36 +1145,49 @@ openBarcodeModal(product) {
 },
 
 // Inisialisasi Scanner Kamera Menggunakan Html5Qrcode
+// 1. Ganti variabel html5QrcodeScanner menjadi ini (agar lebih bersih)
+html5Qrcode: null,
+
+// 2. GANTI FUNGSI openScanner() DAN closeScanner() DENGAN INI
 openScanner() {
     this.scannerModalOpen = true;
     
     this.$nextTick(() => {
-        // Konfigurasi Kamera (Akan meminta izin akses kamera browser)
-        this.html5QrcodeScanner = new Html5QrcodeScanner(
-            "qr-reader", 
-            { fps: 10, qrbox: { width: 250, height: 100 } }, 
-            false
-        );
+        // Gunakan Core API (Html5Qrcode) langsung agar bisa memaksa kamera belakang
+        this.html5Qrcode = new Html5Qrcode("qr-reader");
         
-        // Mulai Scan
-        this.html5QrcodeScanner.render((decodedText, decodedResult) => {
-            // BERHASIL SCAN!
-            this.inventorySearch = decodedText; // Masukkan hasil scan ke kolom pencarian
-            this.closeScanner(); // Matikan kamera
-            
-            // Beri notifikasi audio/visual halus
-            alert(`✅ Barcode Terdeteksi: ${decodedText}`);
-        }, (errorMessage) => {
-            // Error biasa jika frame tidak menemukan barcode (diabaikan saja)
+        // Konfigurasi Paksa Kamera Belakang (environment)
+        const cameraConfig = { facingMode: "environment" };
+        const scanConfig = { fps: 10, qrbox: { width: 250, height: 100 } };
+
+        this.html5Qrcode.start(
+            cameraConfig,
+            scanConfig,
+            (decodedText, decodedResult) => {
+                // BERHASIL SCAN!
+                this.inventorySearch = decodedText; // Masukkan hasil scan ke kolom pencarian
+                this.closeScanner(); // Matikan kamera otomatis
+                
+                // Beri notifikasi
+                alert(`✅ Barcode Terdeteksi: ${decodedText}`);
+            }, 
+            (errorMessage) => {
+                // Abaikan error per-frame (wajar saat kamera sedang mencari fokus)
+            }
+        ).catch(err => {
+            console.error("Gagal memulai kamera belakang:", err);
+            alert("Kamera belakang tidak dapat diakses. Pastikan browser memiliki izin kamera!");
         });
     });
 },
 
-// Matikan Kamera
+// Matikan Kamera dengan benar saat modal ditutup
 closeScanner() {
-    if (this.html5QrcodeScanner) {
-        this.html5QrcodeScanner.clear().catch(error => {
-            console.error("Gagal mematikan kamera.", error);
+    if (this.html5Qrcode) {
+        this.html5Qrcode.stop().then(() => {
+            this.html5Qrcode.clear();
+        }).catch(err => {
+            console.error("Gagal mematikan kamera.", err);
         });
     }
     this.scannerModalOpen = false;
