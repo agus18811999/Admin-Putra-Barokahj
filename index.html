@@ -774,6 +774,22 @@ body {
                 </div>
                 <i x-show="currentTab === 'dashboard'" class="fa-solid fa-chevron-right text-[10px] text-emerald-200"></i>
             </button>
+            <!-- TOMBOL KASIR & REKONSILIASI (MOBILE SIDEBAR) -->
+            <button @click="switchTab('shift_management'); mobileSidebarOpen = false" 
+                    :class="currentTab === 'shift_management' ? 'bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-700 text-white font-bold shadow-[0_8px_20px_rgba(5,150,105,0.32)] border-emerald-500/20 translate-x-1' : 'text-slate-600 hover:text-emerald-900 hover:bg-emerald-50/80 border-transparent font-medium'" 
+                    class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl border transition-all text-xs tracking-wide text-left">
+                <div class="flex items-center gap-3">
+                    <span class="w-7 h-7 rounded-xl flex items-center justify-center text-xs transition-all" 
+                          :class="currentTab === 'shift_management' ? 'bg-white/15 text-white' : 'bg-emerald-50 text-emerald-700'">
+                        <i class="fa-solid fa-cash-register"></i>
+                    </span>
+                    <span>Kasir &amp; Rekonsiliasi</span>
+                </div>
+                <span class="px-1.5 py-0.5 rounded text-[8px] font-mono font-bold tracking-wider" 
+                      :class="currentTab === 'shift_management' ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-800'">
+                    SHIFT
+                </span>
+            </button>
 
             <!-- 2. Manajemen Pesanan -->
             <button @click="switchTab('orders'); mobileSidebarOpen = false" 
@@ -8446,32 +8462,47 @@ isSavingAds: false,
 },
 
 
-                async loadAllData() {
+        async loadAllData() {
                     this.isLoadingData = true;
-                       await Promise.all([
-        this.fetchAnalytics(), 
-        this.fetchOrders(true),
-        this.fetchAdminCustomOrders(),
-        this.fetchAdminProducts(), // <--- TAMBAHKAN BARIS INI
-        this.fetchProcurements(),
-        this.syncLogisticsData(),
-    this.syncExpensesData(),
-    
-    this.syncSuppliersData() 
-        
-    ]);
-                    this.isLoadingData = false;
-                    this.fetchPopupSettings();
-                    
-                    
-                    
-                    // Render chart jika tab pertama adalah dashboard
-                    if(this.currentTab === 'dashboard') {
-                        this.$nextTick(() => { this.renderCharts(); });
-                    }
-                    this.fetchAdsAdmin();
-                },
 
+                    try {
+                        // Menembakkan SEMUA request secara BERSAMAAN (Paralel)
+                        // Waktu loading akan terpangkas drastis menjadi 2 - 4 detik.
+                        await Promise.all([
+                            this.fetchAnalytics(), 
+                            this.fetchOrders(true),
+                            this.fetchAdminCustomOrders(),
+                            this.fetchAdminProducts(),
+                            this.fetchProcurements(),
+                            this.syncLogisticsData(),
+                            this.syncExpensesData(),
+                            this.syncSuppliersData(),
+                            
+                            // Fitur yang tadinya telat (sekarang dimuat bersamaan di awal)
+                            this.syncShiftLiveMetrics(),
+                            this.fetchShiftHistory(),
+                            this.fetchAdminFlashSale(),
+                            this.fetchCustomerAnalysis(false),
+                            this.fetchPopupSettings(),
+                            this.fetchAdsAdmin()
+                        ]);
+
+                    } catch (e) {
+                        console.error("Gagal loadAllData:", e);
+                        this.showToast('error', 'Kendala Jaringan', 'Gagal menarik data master dari server.', 'System');
+                    } finally {
+                        // Tutup layar loading putih
+                        this.isLoadingData = false;
+
+                        // Render grafik sesuai tab yang sedang terbuka
+                        if(this.currentTab === 'dashboard') {
+                            this.$nextTick(() => { this.renderCharts(); });
+                        }
+                        if(this.currentTab === 'customer_analysis') {
+                            this.$nextTick(() => { this.renderFunnelCharts(); });
+                        }
+                    }
+                }, 
                 async refreshData() {
                     this.isRefreshing = true;
                     await this.loadAllData();
@@ -10887,7 +10918,8 @@ renderFunnelCharts() {
 
 async submitClockIn() {
             if (!this.clockInForm.namaKasir) {
-                this.showAdminToast('error', 'Nama Kasir Wajib', 'Masukkan nama petugas kasir jaga!', 'Clock-In');
+                // GANTI showAdminToast -> showToast
+                this.showToast('error', 'Nama Kasir Wajib', 'Masukkan nama petugas kasir jaga!', 'Clock-In');
                 return;
             }
 
@@ -10909,17 +10941,20 @@ async submitClockIn() {
 
                 if (json.status === 'success') {
                     this.clockInModalOpen = false;
-                    this.showAdminToast('success', 'Shift Resmi Dibuka! 🟢', json.message, 'Shift Started');
+                    // GANTI showAdminToast -> showToast
+                    this.showToast('success', 'Shift Resmi Dibuka! 🟢', json.message, 'Shift Started');
                     await this.syncShiftLiveMetrics();
                 } else {
-                    this.showAdminToast('error', 'Gagal Buka Shift', json.message, 'Shift Error');
+                    // GANTI showAdminToast -> showToast
+                    this.showToast('error', 'Gagal Buka Shift', json.message, 'Shift Error');
                 }
             } catch (e) {
-                this.showAdminToast('error', 'Kendala Jaringan', 'Gagal terhubung ke database.', 'Network Error');
+                // GANTI showAdminToast -> showToast
+                this.showToast('error', 'Kendala Jaringan', 'Gagal terhubung ke database.', 'Network Error');
             } finally {
                 this.isSubmittingShift = false;
             }
-        },
+        },      
         // 3. Buka Modal Clock-Out & Blind Count
         openClockOutModal() {
             this.denom = { d100k: 0, d50k: 0, d20k: 0, d10k: 0, d5k: 0, d2k: 0, d1k: 0, dKoin: 0 };
@@ -10928,14 +10963,19 @@ async submitClockIn() {
             this.clockOutModalOpen = true;
         },
 
-        async executeCloseShift() {
+async executeCloseShift() {
             if (!this.blindAuditStatus.isPass && !this.blindForm.varianceReason.trim()) {
-                this.showAdminToast('error', 'Keterangan Wajib', 'Ada selisih kas! Harap isi alasan selisih sebelum tutup shift.', 'Audit Warning');
+                // GANTI showAdminToast -> showToast
+                this.showToast('error', 'Keterangan Wajib', 'Ada selisih kas! Harap isi alasan selisih sebelum tutup shift.', 'Audit Warning');
                 return;
             }
 
             this.isSubmittingShift = true;
-            const digitalActual = (Number(this.cleanNumber(this.blindForm.qrisActual)) || 0) + (Number(this.cleanNumber(this.blindForm.bankActual)) || 0);
+            
+            // Perbaikan cleanNumber dari masalah sebelumnya
+            const qrisClean = Number(String(this.blindForm.qrisActual).replace(/\D/g, '')) || 0;
+            const bankClean = Number(String(this.blindForm.bankActual).replace(/\D/g, '')) || 0;
+            const digitalActual = qrisClean + bankClean;
 
             const payload = new URLSearchParams({
                 action: 'close_shift',
@@ -10955,19 +10995,21 @@ async submitClockIn() {
 
                 if (json.status === 'success') {
                     this.clockOutModalOpen = false;
-                    this.showAdminToast('success', 'Shift Resmi Ditutup! 🔒', 'Rekonsiliasi selesai dicatat.', 'Shift Closed');
+                    // GANTI showAdminToast -> showToast
+                    this.showToast('success', 'Shift Resmi Ditutup! 🔒', 'Rekonsiliasi selesai dicatat.', 'Shift Closed');
                     await this.syncShiftLiveMetrics();
                     await this.fetchShiftHistory();
                 } else {
-                    this.showAdminToast('error', 'Gagal Tutup Shift', json.message, 'Shift Error');
+                    // GANTI showAdminToast -> showToast
+                    this.showToast('error', 'Gagal Tutup Shift', json.message, 'Shift Error');
                 }
             } catch (e) {
-                this.showAdminToast('error', 'Kendala Jaringan', 'Gagal menyimpan rekonsiliasi.', 'Network Error');
+                // GANTI showAdminToast -> showToast
+                this.showToast('error', 'Kendala Jaringan', 'Gagal menyimpan rekonsiliasi.', 'Network Error');
             } finally {
                 this.isSubmittingShift = false;
             }
         },
-
         // 4. Ambil Riwayat Shift
         async fetchShiftHistory() {
             try {
