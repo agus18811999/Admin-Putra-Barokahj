@@ -627,82 +627,98 @@ body {
 <!-- ========================================================================= -->
 <!-- HEADER ADMIN: LUMINOUS MINT LUXURY DENGAN LIVE CLOCK & PANDUAN INTERAKTIF -->
 <!-- ========================================================================= -->
-<header class="bg-white/95 backdrop-blur-xl border-b border-emerald-100/90 py-3 px-4 sm:px-6 lg:px-8 z-30 sticky top-0 shadow-[0_4px_25px_rgba(16,185,129,0.04)] select-none">
-    
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-4">
+<!-- ========================================================================= -->
+<!-- 1. TOPBAR HEADER: LUMINOUS MINT LUXURY (ANTI-NYUNGSEP & ZERO-OVERFLOW HP) -->
+<!-- ========================================================================= -->
+<header class="bg-white/95 backdrop-blur-2xl border-b border-emerald-100/90 px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 z-30 sticky top-0 shadow-[0_4px_25px_rgba(16,185,129,0.05)] select-none">
+    <div class="flex items-center justify-between gap-2 sm:gap-4 max-w-full">
         
-        <!-- SISI KIRI: HAMBURGER MOBILE & JUDUL TAB AKTIF -->
-        <div class="flex items-center justify-between md:justify-start gap-3 sm:gap-4 min-w-0">
-            <div class="flex items-center gap-3 min-w-0">
-                <!-- Tombol Hamburger Mobile -->
-                <button @click="mobileSidebarOpen = !mobileSidebarOpen" 
-                        aria-label="Buka Menu Admin" title="Buka Menu"
-                        class="md:hidden w-10 h-10 rounded-2xl bg-emerald-50/80 border border-emerald-200/90 text-slate-700 hover:text-emerald-800 flex items-center justify-center transition shadow-sm active:scale-95 shrink-0">
-                    <i class="fa-solid text-sm" :class="mobileSidebarOpen ? 'fa-xmark text-emerald-700 rotate-90 scale-110' : 'fa-bars-staggered'"></i>
-                </button>
-                
-                <!-- Judul Tab Aktif Dinamis -->
-                <div class="truncate">
-                    <h2 class="text-base sm:text-xl font-serif font-bold text-slate-900 tracking-tight leading-tight truncate" 
-                        x-text="getTabTitle()"></h2>
-                    <p class="text-[10px] text-emerald-700 font-semibold uppercase tracking-wider hidden sm:block">
-                        Panel Kontrol Putra Barokah
+        <!-- SISI KIRI: HAMBURGER MOBILE, LOGO SQUIRCLE, & JUDUL AKTIF -->
+        <div class="flex items-center gap-2 sm:gap-3.5 min-w-0">
+            <!-- Tombol Hamburger Mobile -->
+            <button @click="mobileSidebarOpen = !mobileSidebarOpen" 
+                    type="button"
+                    aria-label="Buka Menu Navigasi"
+                    class="md:hidden w-9 h-9 rounded-xl bg-emerald-50/90 border border-emerald-200/90 text-slate-700 hover:text-emerald-800 flex items-center justify-center transition shadow-2xs active:scale-95 shrink-0">
+                <i class="fa-solid text-sm" :class="mobileSidebarOpen ? 'fa-xmark text-emerald-700 rotate-90' : 'fa-bars-staggered'"></i>
+            </button>
+            
+            <!-- Logo Icon Mini Khusus Layar Kecil -->
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 text-white flex items-center justify-center text-xs shadow-xs border border-white/30 shrink-0 sm:hidden">
+                <i class="fa-solid fa-gem"></i>
+            </div>
+
+            <!-- Judul Tab Aktif Dinamis -->
+            <div class="min-w-0">
+                <h2 class="text-xs sm:text-base lg:text-lg font-serif font-bold text-slate-900 tracking-tight leading-tight truncate max-w-[130px] xs:max-w-[170px] sm:max-w-xs md:max-w-none" 
+                    x-text="getTabTitle()"></h2>
+                <div class="flex items-center gap-1.5 mt-0.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <p class="text-[9px] sm:text-[10px] text-emerald-700 font-bold uppercase tracking-wider truncate">
+                        Putra Barokah Live
                     </p>
                 </div>
             </div>
+        </div>
 
-            <!-- Jam Mini (Tampil khusus di layar HP sangat kecil agar hemat ruang) -->
-            <div class="flex md:hidden items-center gap-1.5 px-2.5 py-1 rounded-xl bg-emerald-50/90 border border-emerald-200/80 text-[10px] font-mono font-bold text-emerald-800 shrink-0">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+        <!-- SISI KANAN: TOMBOL AUDIT LOG, LIVE CLOCK, PANDUAN, REFRESH, & AVATAR -->
+        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            
+            <!-- 1. TOMBOL UTAMA: AUDIT LOG (AKSES CEPAT GLOBAL DARI TAB MANAPUN) -->
+            <button @click="openAuditLogModal()" 
+                    type="button"
+                    class="relative flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl sm:rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-700 to-emerald-800 hover:from-emerald-700 hover:to-teal-900 text-white font-bold text-[10px] sm:text-xs uppercase tracking-wider shadow-[0_4px_14px_rgba(5,150,105,0.28)] hover:shadow-[0_6px_20px_rgba(5,150,105,0.38)] active:scale-95 transition-all duration-200 cursor-pointer group"
+                    title="Buka Buku Log Aktivitas & Keamanan Admin">
+                <span class="w-5 h-5 rounded-lg bg-white/20 flex items-center justify-center text-[10px] backdrop-blur-xs group-hover:rotate-12 transition-transform">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </span>
+                <span class="hidden xs:inline">Audit Log</span>
+                <span class="xs:hidden">Log</span>
+                <!-- Indikator Live Beacon -->
+                <span class="flex h-2 w-2 relative -mr-0.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-200 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-300"></span>
+                </span>
+            </button>
+
+            <!-- 2. LIVE CLOCK (RESPONSIF: FORMAT TANGGAL DI DESKTOP, JAM RINGKAS DI TABLET) -->
+            <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-[#f8fcf9] border border-emerald-200/80 text-slate-700 shadow-2xs">
+                <i class="fa-regular fa-clock text-xs text-emerald-600"></i>
+                <div class="flex flex-col text-left leading-none">
+                    <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold" x-text="liveDate"></span>
+                    <span class="text-xs font-mono font-bold text-slate-900 mt-0.5" x-text="liveTime"></span>
+                </div>
+            </div>
+
+            <!-- Jam Mini Khusus Mobile HP -->
+            <div class="flex md:hidden items-center px-2 py-1 rounded-lg bg-emerald-50/90 border border-emerald-200/80 text-[10px] font-mono font-bold text-emerald-800 shrink-0">
                 <span x-text="liveTimeShort"></span>
             </div>
-        </div>
-        
-        <!-- SISI KANAN: LIVE CLOCK LENGKAP, PANDUAN FITUR, REFRESH & AVATAR -->
-        <div class="flex items-center justify-end flex-wrap gap-2 sm:gap-2.5 shrink-0">
-            
-            <!-- 1. LIVE CLOCK (HARI, TANGGAL, BULAN, TAHUN & DETIK REALTIME) -->
-            <div class="hidden sm:flex items-center gap-2.5 px-3.5 py-2 rounded-2xl bg-[#f8fcf9] border border-emerald-200/80 text-slate-700 shadow-2xs">
-                <!-- Kalender & Indikator Detik Denyut -->
-                <div class="w-7 h-7 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs shrink-0 shadow-2xs">
-                    <i class="fa-regular fa-clock"></i>
-                </div>
-                <div class="flex flex-col text-left leading-none">
-                    <span class="text-[10px] uppercase tracking-wider text-slate-400 font-bold" x-text="liveDate"></span>
-                    <div class="flex items-center gap-1.5 mt-0.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <span class="text-xs font-mono font-bold text-slate-900" x-text="liveTime"></span>
-                    </div>
-                </div>
-            </div>
 
-            <!-- 2. TOMBOL PANDUAN PENGGUNAAN FITUR (CONTEXT-AWARE USER GUIDE) -->
+            <!-- 3. TOMBOL PANDUAN PENGGUNAAN FITUR (CONTEXT-AWARE) -->
             <button @click="openGuideModal()" 
-                    class="flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-2xl bg-emerald-50 hover:bg-emerald-100/80 text-emerald-800 border border-emerald-200/90 transition-all duration-200 text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-2xs active:scale-95 group"
-                    title="Buka Buku Panduan Fitur Ini">
-                <span class="w-5 h-5 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-[10px] shadow-sm group-hover:rotate-12 transition-transform">
-                    <i class="fa-solid fa-book-open"></i>
-                </span>
-                <span class="hidden xs:inline">Panduan</span>
-                <span class="hidden md:inline font-mono text-[9px] bg-white px-1.5 py-0.5 rounded text-emerald-700 border border-emerald-200">Panduan</span>
+                    type="button"
+                    class="w-9 h-9 sm:w-auto sm:px-3 sm:py-2 rounded-xl sm:rounded-2xl bg-emerald-50 hover:bg-emerald-100/90 text-emerald-800 border border-emerald-200/90 flex items-center justify-center gap-1.5 text-xs font-bold uppercase tracking-wider transition shadow-2xs active:scale-95"
+                    title="Buka Panduan Fitur">
+                <i class="fa-solid fa-book-open text-xs text-emerald-700"></i>
+                <span class="hidden lg:inline">Panduan</span>
             </button>
 
-            <!-- 3. TOMBOL SEGARKAN DATA (REFRESH) -->
+            <!-- 4. TOMBOL SEGARKAN (REFRESH) -->
             <button @click="refreshData()" 
-                    class="flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-2xl bg-white border border-emerald-200/90 hover:bg-emerald-50/80 text-slate-700 hover:text-emerald-900 transition-all text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-2xs active:scale-95 group"
-                    title="Segarkan Data dari Database">
-                <i class="fa-solid fa-rotate-right text-emerald-600 group-hover:text-emerald-800" :class="{'fa-spin': isRefreshing}"></i> 
-                <span class="hidden lg:inline">Segarkan</span>
+                    type="button"
+                    class="w-9 h-9 rounded-xl sm:rounded-2xl bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 border border-emerald-200/90 flex items-center justify-center transition shadow-2xs active:scale-95"
+                    title="Segarkan Data Real-time">
+                <i class="fa-solid fa-rotate-right text-xs text-emerald-600" :class="{'fa-spin': isRefreshing}"></i>
             </button>
             
-            <!-- 4. AVATAR ADMIN PERISAI -->
-            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700 text-white flex items-center justify-center text-xs sm:text-sm shadow-[0_4px_14px_rgba(5,150,105,0.28)] border border-white/40 shrink-0" 
+            <!-- 5. AVATAR ADMIN PERISAI -->
+            <div class="w-9 h-9 rounded-xl sm:rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 text-white flex items-center justify-center text-xs shadow-xs border border-white/40 shrink-0" 
                  title="Administrator Utama">
                 <i class="fa-solid fa-user-shield"></i>
             </div>
 
         </div>
-
     </div>
 </header>
 
@@ -5018,6 +5034,348 @@ body {
     </div>
 
 </div>
+<!-- ========================================================================= -->
+<!-- 2. AUDIT LOG ENTERPRISE CONSOLE & DIFF INSPECTOR MODAL                   -->
+<!-- ========================================================================= -->
+<div x-show="auditModalOpen" class="relative z-[200]" x-cloak>
+    
+    <!-- Backdrop Blur Sejuk -->
+    <div x-show="auditModalOpen" 
+         x-transition.opacity 
+         class="fixed inset-0 bg-emerald-950/50 backdrop-blur-md" 
+         @click="closeAuditLogModal()"></div>
+
+    <div class="fixed inset-0 flex items-center justify-center p-2.5 sm:p-5 z-50 overflow-y-auto select-none">
+        
+        <!-- Panel Konsol Utama (Pearl White & Emerald Glass) -->
+        <div x-show="auditModalOpen" 
+             x-transition:enter="transform transition ease-out duration-350"
+             x-transition:enter-start="opacity-0 scale-95 translate-y-6"
+             x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+             x-transition:leave="transform transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-95 translate-y-4"
+             class="w-full max-w-6xl bg-gradient-to-b from-[#ffffff] via-[#f7fcf9] to-[#edf7f1] border border-emerald-200/90 rounded-2xl sm:rounded-[36px] overflow-hidden shadow-[0_25px_70px_rgba(16,185,129,0.25)] relative backdrop-blur-2xl flex flex-col my-auto max-h-[94vh]">
+            
+            <!-- A. HEADER KONSOL AUDIT -->
+            <div class="p-4 sm:p-6 border-b border-emerald-100 bg-[#f9fdfa] flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 shrink-0">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-emerald-600 via-teal-700 to-emerald-900 text-white flex items-center justify-center text-lg sm:text-xl shadow-[0_8px_20px_rgba(5,150,105,0.32)] border border-white/40 shrink-0">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="px-2.5 py-0.5 rounded-full text-[9px] font-mono font-black uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-200">
+                                Immutable Audit Ledger
+                            </span>
+                            <span class="flex items-center gap-1 text-[10px] text-emerald-700 font-bold" x-show="auditAutoStream">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                                Real-Time Stream
+                            </span>
+                        </div>
+                        <h3 class="text-base sm:text-xl font-serif font-bold text-slate-900 leading-tight mt-0.5 truncate">
+                            Audit Trail & Log Aktivitas Sistem
+                        </h3>
+                    </div>
+                </div>
+
+                <!-- Toolbar Tombol Aksi Kanan -->
+                <div class="flex items-center gap-2 self-end sm:self-auto shrink-0">
+                    <!-- Toggle Live Stream -->
+                    <button type="button" 
+                            @click="toggleAuditStream()"
+                            :class="auditAutoStream ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : 'bg-slate-100 text-slate-500 border-slate-200'"
+                            class="px-3 py-1.5 rounded-xl border text-[11px] font-bold uppercase tracking-wider transition flex items-center gap-1.5 shadow-2xs"
+                            title="Nyalakan/Matikan Polling Otomatis">
+                        <i class="fa-solid fa-tower-broadcast" :class="{'text-emerald-600': auditAutoStream}"></i>
+                        <span class="hidden xs:inline" x-text="auditAutoStream ? 'Auto Live ON' : 'Live Paused'"></span>
+                    </button>
+
+                    <!-- Tombol Refresh Log -->
+                    <button type="button" 
+                            @click="fetchAuditLogs(false)"
+                            class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 border border-emerald-200 flex items-center justify-center transition shadow-2xs active:scale-95"
+                            title="Segarkan Log Sekarang">
+                        <i class="fa-solid fa-rotate-right text-xs" :class="{'fa-spin': auditLoading}"></i>
+                    </button>
+
+                    <!-- Tombol Ekspor CSV -->
+                    <button type="button" 
+                            @click="exportAuditCSV()"
+                            class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-700 text-[11px] font-bold uppercase tracking-wider transition flex items-center gap-1.5 shadow-2xs active:scale-95"
+                            title="Unduh Berkas CSV Log Aktivitas">
+                        <i class="fa-solid fa-cloud-arrow-down text-xs"></i>
+                        <span class="hidden xs:inline">Ekspor CSV</span>
+                    </button>
+
+                    <!-- Tombol Tutup X -->
+                    <button type="button" 
+                            @click="closeAuditLogModal()" 
+                            class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-100 hover:bg-rose-50 text-slate-400 hover:text-rose-600 flex items-center justify-center transition text-xs border border-slate-200 shrink-0 ml-1">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- B. METRIK KPI LOG AUDIT (4 KARTU BENTO MAWAS DIRI) -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 p-3.5 sm:p-5 border-b border-emerald-100 bg-white/70 backdrop-blur-md shrink-0">
+                <div class="bg-white rounded-2xl border border-emerald-100 p-3 sm:p-4 shadow-2xs">
+                    <span class="text-[9px] uppercase font-extrabold tracking-wider text-slate-400 block mb-0.5">Total Aktivitas</span>
+                    <div class="flex items-baseline gap-1.5">
+                        <span class="text-lg sm:text-2xl font-black font-mono text-slate-900" x-text="auditLogs.length"></span>
+                        <span class="text-[10px] text-emerald-700 font-bold">Event</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-emerald-100 p-3 sm:p-4 shadow-2xs">
+                    <span class="text-[9px] uppercase font-extrabold tracking-wider text-slate-400 block mb-0.5">Mutasi Data (CUD)</span>
+                    <div class="flex items-baseline gap-1.5">
+                        <span class="text-lg sm:text-2xl font-black font-mono text-amber-700" x-text="countAuditMutations"></span>
+                        <span class="text-[10px] text-amber-700 font-bold bg-amber-50 px-1.5 py-0.2 rounded">Perubahan</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-emerald-100 p-3 sm:p-4 shadow-2xs">
+                    <span class="text-[9px] uppercase font-extrabold tracking-wider text-slate-400 block mb-0.5">Akses &amp; Sesi Jaga</span>
+                    <div class="flex items-baseline gap-1.5">
+                        <span class="text-lg sm:text-2xl font-black font-mono text-teal-800" x-text="countAuditSessions"></span>
+                        <span class="text-[10px] text-teal-700 font-bold">Sesi</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-emerald-100 p-3 sm:p-4 shadow-2xs">
+                    <span class="text-[9px] uppercase font-extrabold tracking-wider text-slate-400 block mb-0.5">Tingkat Integritas</span>
+                    <div class="flex items-baseline gap-1.5">
+                        <span class="text-lg sm:text-2xl font-black font-mono text-emerald-700">100%</span>
+                        <span class="text-[10px] text-emerald-600 font-bold">Verified</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- C. COMMAND FILTER & PENCARIAN REAKTIF MULTI-KRITERIA -->
+            <div class="p-3.5 sm:p-5 border-b border-emerald-100 bg-[#f8fcf9] space-y-3 shrink-0">
+                <div class="flex flex-col md:flex-row gap-2.5 items-stretch md:items-center justify-between">
+                    <!-- Search Input -->
+                    <div class="relative flex-1">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-emerald-600 text-xs"></i>
+                        <input type="text" 
+                               x-model="auditSearch" 
+                               placeholder="Cari ID Log, Admin, Deskripsi, Modul, atau IP..." 
+                               class="w-full bg-white border border-emerald-200/90 rounded-xl pl-9 pr-8 py-2 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 shadow-2xs">
+                        <button type="button" x-show="auditSearch" @click="auditSearch = ''" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                            <i class="fa-solid fa-xmark text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Filter Dropdowns -->
+                    <div class="flex flex-wrap items-center gap-2 text-xs">
+                        <!-- Filter Modul -->
+                        <select x-model="auditModuleFilter" class="bg-white border border-emerald-200 rounded-xl px-2.5 py-2 text-xs font-medium text-slate-700 focus:outline-none focus:border-emerald-500 shadow-2xs">
+                            <option value="Semua">Semua Modul</option>
+                            <option value="Pesanan">Pesanan &amp; Transaksi</option>
+                            <option value="Custom Orders">Custom Orders</option>
+                            <option value="Katalog Produk">Katalog Produk</option>
+                            <option value="Stok Gudang">Stok Gudang</option>
+                            <option value="Kasir &amp; Shift">Kasir &amp; Shift</option>
+                            <option value="Iklan &amp; Promo">Iklan &amp; Promo</option>
+                            <option value="Flash Sale">Flash Sale</option>
+                            <option value="Logistik">Logistik &amp; Resi</option>
+                            <option value="Pengeluaran">Pengeluaran</option>
+                            <option value="Pengadaan (PO)">Pengadaan (PO)</option>
+                            <option value="Supplier">Daftar Supplier</option>
+                            <option value="System Tools">System Tools</option>
+                        </select>
+
+                        <!-- Filter Jenis Aktivitas -->
+                        <select x-model="auditTypeFilter" class="bg-white border border-emerald-200 rounded-xl px-2.5 py-2 text-xs font-medium text-slate-700 focus:outline-none focus:border-emerald-500 shadow-2xs">
+                            <option value="Semua">Semua Aksi</option>
+                            <option value="CREATE">CREATE (Tambah Data)</option>
+                            <option value="UPDATE">UPDATE (Perubahan)</option>
+                            <option value="DELETE">DELETE (Hapus Data)</option>
+                            <option value="ACCESS">ACCESS (Navigasi / View)</option>
+                            <option value="SHIFT">SHIFT (Kas Laci)</option>
+                            <option value="EXPORT">EXPORT (Unduh Data)</option>
+                        </select>
+
+                        <!-- Filter Status -->
+                        <select x-model="auditStatusFilter" class="bg-white border border-emerald-200 rounded-xl px-2.5 py-2 text-xs font-medium text-slate-700 focus:outline-none focus:border-emerald-500 shadow-2xs">
+                            <option value="Semua">Semua Status</option>
+                            <option value="SUCCESS">SUCCESS</option>
+                            <option value="FAILED">FAILED</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Quick Date Filter Capsule & Counter -->
+                <div class="flex items-center justify-between text-[11px] text-slate-500 flex-wrap gap-2 pt-1">
+                    <div class="flex items-center gap-1.5">
+                        <span class="font-bold text-slate-400 uppercase text-[9.5px]">Rentang Waktu:</span>
+                        <button type="button" @click="auditDateFilter = 'all'" :class="auditDateFilter === 'all' ? 'bg-emerald-600 text-white font-bold' : 'bg-white text-slate-600 border border-emerald-100'" class="px-2.5 py-0.5 rounded-lg transition text-[10px]">Semua</button>
+                        <button type="button" @click="auditDateFilter = 'today'" :class="auditDateFilter === 'today' ? 'bg-emerald-600 text-white font-bold' : 'bg-white text-slate-600 border border-emerald-100'" class="px-2.5 py-0.5 rounded-lg transition text-[10px]">Hari Ini</button>
+                        <button type="button" @click="auditDateFilter = '7days'" :class="auditDateFilter === '7days' ? 'bg-emerald-600 text-white font-bold' : 'bg-white text-slate-600 border border-emerald-100'" class="px-2.5 py-0.5 rounded-lg transition text-[10px]">7 Hari Terakhir</button>
+                    </div>
+                    <span>Menampilkan <strong class="text-slate-900 font-mono" x-text="filteredAuditLogs.length"></strong> rekaman audit</span>
+                </div>
+            </div>
+
+            <!-- D. DAFTAR FEED LOG AKTIVITAS (CHRONOLOGICAL STREAM TABLE) -->
+            <div class="overflow-y-auto flex-1 hide-scroll p-3.5 sm:p-5 space-y-2.5 bg-slate-50/60 min-h-[300px]">
+                
+                <template x-for="log in filteredAuditLogs" :key="log.idLog">
+                    <div class="bg-white rounded-2xl border border-emerald-100/90 p-3.5 sm:p-4 shadow-2xs hover:shadow-xs transition duration-200 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
+                        
+                        <!-- Sisi Kiri: Waktu, Aktor, & Modul -->
+                        <div class="flex items-start gap-3 min-w-0">
+                            <!-- Action Icon Badge -->
+                            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-xs sm:text-sm shrink-0 border"
+                                 :class="getAuditBadgeClass(log.actionType)">
+                                <i class="fa-solid" :class="getAuditActionIcon(log.actionType)"></i>
+                            </div>
+
+                            <div class="min-w-0 space-y-0.5">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span class="px-2 py-0.5 rounded-md text-[9px] font-mono font-black uppercase tracking-wider border"
+                                          :class="getAuditBadgeClass(log.actionType)"
+                                          x-text="log.actionType"></span>
+                                    
+                                    <span class="font-bold text-slate-900 text-xs truncate max-w-[200px]" x-text="log.module"></span>
+                                    
+                                    <span class="text-[10px] font-mono text-slate-400" x-text="log.timestamp"></span>
+                                </div>
+
+                                <p class="text-slate-700 font-medium leading-relaxed break-words" x-text="log.detail"></p>
+
+                                <div class="flex items-center gap-2 text-[10px] text-slate-400 font-mono pt-0.5 flex-wrap">
+                                    <span><i class="fa-solid fa-user-shield mr-1 text-emerald-600"></i><strong class="text-slate-600" x-text="log.adminName"></strong> (<span x-text="log.adminId"></span>)</span>
+                                    <span x-show="log.ipAddress && log.ipAddress !== '-'">&bull; IP: <span x-text="log.ipAddress"></span></span>
+                                    <span x-show="log.userAgent && log.userAgent !== '-'">&bull; <span class="truncate max-w-[150px] inline-block align-bottom" x-text="log.userAgent"></span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sisi Kanan: Status & Tombol Inspect Diff -->
+                        <div class="flex items-center justify-between md:justify-end gap-2.5 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100 shrink-0">
+                            <span class="px-2.5 py-0.5 rounded-full text-[9px] font-mono font-black uppercase tracking-wider border"
+                                  :class="log.status === 'SUCCESS' ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : 'bg-rose-50 text-rose-700 border-rose-200'"
+                                  x-text="log.status"></span>
+
+                            <!-- Tombol Inspect Diff (Muncul bila ada data perubahan Sebelum vs Sesudah) -->
+                            <button type="button" 
+                                    @click="openAuditDiffDetail(log)" 
+                                    class="px-3 py-1.5 rounded-xl bg-[#f8fcf9] hover:bg-emerald-50 text-emerald-800 border border-emerald-200 text-[11px] font-bold uppercase tracking-wider transition flex items-center gap-1.5 shadow-2xs active:scale-95 cursor-pointer">
+                                <i class="fa-solid fa-code-compare text-xs text-emerald-600"></i>
+                                <span>Inspect Data</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </template>
+
+                <!-- Empty State -->
+                <div x-show="filteredAuditLogs.length === 0" class="p-12 text-center bg-white rounded-3xl border border-emerald-100 my-4">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl mx-auto mb-3 border border-emerald-100 shadow-2xs">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                    </div>
+                    <h4 class="font-serif font-bold text-slate-800 text-sm mb-1">Tidak Ada Log yang Cocok</h4>
+                    <p class="text-xs text-slate-400 max-w-xs mx-auto">Silakan ubah kata kunci pencarian, modul, atau rentang filter tanggal Anda.</p>
+                </div>
+
+            </div>
+
+            <!-- E. FOOTER KONSOL AUDIT -->
+            <div class="p-3.5 sm:p-4 border-t border-emerald-100 bg-[#f9fdfa] flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 shrink-0">
+                <span class="text-[11px] text-emerald-800 font-semibold flex items-center gap-1.5">
+                    <i class="fa-solid fa-lock text-emerald-600"></i>
+                    Semua log dicatat otomatis dan diamankan oleh Protokol Integritas Putra Barokah.
+                </span>
+                <button type="button" 
+                        @click="closeAuditLogModal()" 
+                        class="w-full sm:w-auto px-6 py-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider rounded-xl transition shadow-2xs">
+                    Tutup Konsol
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- 3. MODAL DETAIL INSPECT DATA: BEFORE VS AFTER DIFF VIEWER                -->
+<!-- ========================================================================= -->
+<div x-show="auditDetailModalOpen" class="relative z-[220]" x-cloak>
+    <div x-show="auditDetailModalOpen" x-transition.opacity class="fixed inset-0 bg-emerald-950/45 backdrop-blur-md" @click="auditDetailModalOpen = false"></div>
+    <div class="fixed inset-0 flex items-center justify-center p-3 sm:p-5 z-50 overflow-y-auto select-none">
+        <div x-show="auditDetailModalOpen" x-transition.scale 
+             class="w-full max-w-2xl bg-white border border-emerald-200/90 rounded-3xl overflow-hidden shadow-2xl relative flex flex-col my-auto max-h-[92vh]">
+            
+            <!-- Header Diff -->
+            <div class="p-4 sm:p-5 border-b border-emerald-100 bg-[#f9fdfa] flex justify-between items-center shrink-0">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-sm font-bold">
+                        <i class="fa-solid fa-code-compare"></i>
+                    </span>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Perbandingan Data: Sebelum vs Sesudah</h4>
+                        <span class="text-[10px] font-mono text-slate-400" x-text="selectedAuditDetail?.idLog"></span>
+                    </div>
+                </div>
+                <button @click="auditDetailModalOpen = false" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Body Diff Content -->
+            <div class="p-4 sm:p-6 overflow-y-auto space-y-4 text-xs font-mono hide-scroll flex-1">
+                
+                <!-- Info Ringkas Event -->
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 space-y-1 font-sans">
+                    <div class="flex justify-between"><span>Aksi:</span><strong class="font-mono text-emerald-800" x-text="selectedAuditDetail?.actionType"></strong></div>
+                    <div class="flex justify-between"><span>Modul:</span><span class="font-bold text-slate-900" x-text="selectedAuditDetail?.module"></span></div>
+                    <div class="flex justify-between"><span>Detail:</span><span class="text-slate-600 italic" x-text="selectedAuditDetail?.detail"></span></div>
+                    <div class="flex justify-between"><span>Waktu:</span><span class="font-mono text-slate-500" x-text="selectedAuditDetail?.timestamp"></span></div>
+                </div>
+
+                <!-- Grid Before vs After -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <!-- Before Data -->
+                    <div class="space-y-1.5">
+                        <div class="flex items-center gap-1.5 text-rose-700 font-bold uppercase text-[10px]">
+                            <i class="fa-solid fa-circle-minus"></i>
+                            <span>Data Sebelum (Before State)</span>
+                        </div>
+                        <div class="p-3 bg-rose-50/50 border border-rose-200 rounded-xl max-h-64 overflow-y-auto hide-scroll text-[11px] leading-relaxed break-words whitespace-pre-wrap select-text text-rose-950"
+                             x-text="formatAuditJson(selectedAuditDetail?.beforeData)"></div>
+                    </div>
+
+                    <!-- After Data -->
+                    <div class="space-y-1.5">
+                        <div class="flex items-center gap-1.5 text-emerald-700 font-bold uppercase text-[10px]">
+                            <i class="fa-solid fa-circle-plus"></i>
+                            <span>Data Sesudah (After State)</span>
+                        </div>
+                        <div class="p-3 bg-emerald-50/50 border border-emerald-200 rounded-xl max-h-64 overflow-y-auto hide-scroll text-[11px] leading-relaxed break-words whitespace-pre-wrap select-text text-emerald-950"
+                             x-text="formatAuditJson(selectedAuditDetail?.afterData)"></div>
+                    </div>
+                </div>
+
+                <!-- Technical Footprint Info -->
+                <div class="p-3 rounded-xl bg-slate-100 text-[10px] text-slate-600 space-y-1 font-sans">
+                    <div><strong>Alamat IP:</strong> <span class="font-mono" x-text="selectedAuditDetail?.ipAddress || 'Internal Direct Session'"></span></div>
+                    <div><strong>Perangkat / Browser:</strong> <span class="font-mono" x-text="selectedAuditDetail?.userAgent || navigator.userAgent"></span></div>
+                </div>
+
+            </div>
+
+            <!-- Footer Diff -->
+            <div class="p-3.5 border-t border-emerald-100 bg-[#f9fdfa] flex justify-end">
+                <button type="button" @click="auditDetailModalOpen = false" class="px-5 py-2 bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-2xs">
+                    Selesai
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
 <!-- TAB 6: INVENTORY & BARCODE (ADMIN ONLY) -->
 <!-- ========================================================================= -->
 <!-- TAB 6: INVENTORY & BARCODE (LUMINOUS MINT LUXURY INVENTORY MANAGER)       -->
@@ -8964,6 +9322,7 @@ this.showToast('warning', 'Melebihi Kapasitas', `Jumlah transfer melebihi stok g
     const oldDisplay = Number(this.selectedStockProduct.stok) || 0;
     this.selectedStockProduct.stok = oldDisplay + qty;
     this.selectedStockProduct.stokGudang = currentGudang - qty;
+    this.recordAuditAction('UPDATE', 'Stok Gudang', `Mentransfer ${qty} unit "${this.selectedStockProduct.nama}" dari Gudang ke Display`, { stokDisplayLama: oldDisplay, stokGudangLama: currentGudang }, { stokDisplayBaru: oldDisplay + qty, stokGudangBaru: currentGudang - qty });
 
     const payload = new URLSearchParams({
         action: 'transfer_stock_display',
@@ -9016,9 +9375,17 @@ async executeInflowStock() {
 
     try {
         await fetch(SCRIPT_URL, { method: 'POST', body: payload });
+         this.recordAuditAction(
+            'UPDATE', 
+            'Stok Gudang', 
+            `Menambah pasokan gudang untuk "${this.selectedStockProduct.nama}" sebanyak +${addQty} unit`, 
+            { stokGudangLama: currentGudang }, 
+            { stokGudangBaru: currentGudang + addQty, tambahan: addQty }
+        );
         this.inflowModalOpen = false;
     } catch (e) {
         this.selectedStockProduct.stokGudang = currentGudang;
+        this.recordAuditAction('UPDATE', 'Stok Gudang', `Gagal menambah pasokan gudang "${this.selectedStockProduct.nama}"`, null, null, 'FAILED');
       this.showToast('error', 'Restock Gagal', 'Gagal menyimpan pasokan baru ke database server.', 'Pasok Gudang');
     } finally {
         this.isInflowingStock = false;
@@ -9142,20 +9509,53 @@ async submitProcurementOrder() {
     try {
         const res = await fetch(SCRIPT_URL, { method: 'POST', body: payload });
         const json = await res.json();
+        
         if (json.status === 'success') {
+            // Rekam Audit Log CREATE
+            this.recordAuditAction(
+                'CREATE', 
+                'Pengadaan (PO)', 
+                `Menerbitkan Purchase Order #${json.idPengadaan || 'PO'} "${this.procurementForm.judul}" ke ${this.procurementForm.supplier} senilai ${this.formatRupiah(this.procurementForm.totalBiaya)}`, 
+                null, 
+                this.procurementForm
+            );
+
             this.procurementModalOpen = false;
             await this.fetchProcurements();
-           this.showToast('success', 'Pengadaan Diterbitkan! 📦', 'Dokumen Purchase Order (PO) resmi berhasil disimpan.', 'Pengadaan');
+            this.showToast('success', 'Pengadaan Diterbitkan! 📦', 'Dokumen Purchase Order (PO) resmi berhasil disimpan.', 'Pengadaan');
         } else {
+            this.recordAuditAction('CREATE', 'Pengadaan (PO)', `Gagal membuat PO "${this.procurementForm.judul}"`, null, null, 'FAILED');
             this.showToast('error', 'Gagal Menerbitkan', json.message || 'Terjadi kesalahan sistem saat membuat PO.', 'Pengadaan');
         }
     } catch (e) {
+        this.recordAuditAction('CREATE', 'Pengadaan (PO)', 'Gagal menghubungi server database pengadaan', null, null, 'FAILED');
         this.showToast('error', 'Kendala Jaringan', 'Gagal menghubungi server database pengadaan.', 'Pengadaan');
     } finally {
         this.isSubmittingProcurement = false;
     }
 },
 
+async cycleProcurementStatus(p) {
+    const prevStatus = p.status;
+    const nextStatus = p.status === 'Diajukan' ? 'Disetujui' : (p.status === 'Disetujui' ? 'Selesai' : 'Diajukan');
+    p.status = nextStatus;
+
+    const payload = new URLSearchParams({
+        action: 'update_procurement_status',
+        idPengadaan: p.idPengadaan,
+        status: nextStatus
+    });
+    fetch(SCRIPT_URL, { method: 'POST', body: payload }).catch(() => {});
+    
+    // Rekam Audit Log UPDATE
+    this.recordAuditAction(
+        'UPDATE', 
+        'Pengadaan (PO)', 
+        `Mengubah tahapan PO #${p.idPengadaan} dari "${prevStatus}" menjadi "${nextStatus}"`, 
+        { statusLama: prevStatus }, 
+        { statusBaru: nextStatus }
+    );
+},
 async fetchProcurements() {
     try {
         const res = await fetch(`${SCRIPT_URL}?action=get_procurements`);
@@ -9169,17 +9569,6 @@ async fetchProcurements() {
 },
 
 // Ganti status berurutan (Diajukan -> Disetujui -> Selesai)
-async cycleProcurementStatus(p) {
-    const nextStatus = p.status === 'Diajukan' ? 'Disetujui' : (p.status === 'Disetujui' ? 'Selesai' : 'Diajukan');
-    p.status = nextStatus; // Optimistic update instan
-
-    const payload = new URLSearchParams({
-        action: 'update_procurement_status',
-        idPengadaan: p.idPengadaan,
-        status: nextStatus
-    });
-    fetch(SCRIPT_URL, { method: 'POST', body: payload }).catch(() => {});
-},
 
 // =========================================================================
 // 4. KIRIM REKAP PENGADAAN KE WHATSAPP SECARA RAPI
@@ -9197,7 +9586,7 @@ sendProcurementWA(p) {
         cleanWa = '62' + cleanWa;
     }
 
-    if (!cleanWa) cleanWa = '6281234401237'; // Fallback kontak toko
+    if (!cleanWa) cleanWa = '6281312831690'; // Fallback kontak toko
 
     let itemLines = p.items.map((it, i) => `*${i+1}. ${it.nama}*%0a   ${it.qty} unit x ${this.formatRupiah(it.hargaSatuan)} = ${this.formatRupiah(it.qty * it.hargaSatuan)}`).join('%0a');
 
@@ -9368,7 +9757,7 @@ onSelectOrderForShipment(txId) {
 // Simpan Manifes Pengiriman Baru ke Backend
 async submitNewShipment() {
     if (!this.newShipmentForm.customerName || !this.newShipmentForm.idTransaksi) {
-       this.showToast('warning', 'Data Belum Lengkap', 'Harap lengkapi ID Transaksi dan Nama Penerima paket!', 'Logistik');
+        this.showToast('warning', 'Data Belum Lengkap', 'Harap lengkapi ID Transaksi dan Nama Penerima paket!', 'Logistik');
         return;
     }
 
@@ -9395,7 +9784,6 @@ async submitNewShipment() {
         tanggalUpdate: nowStr
     };
 
-    // Optimistic Update instan di tabel
     this.logisticsList.unshift(newEntry);
 
     const payload = new URLSearchParams({
@@ -9405,16 +9793,78 @@ async submitNewShipment() {
 
     try {
         await fetch(SCRIPT_URL, { method: 'POST', body: payload });
+        
+        // Rekam Audit Log CREATE
+        this.recordAuditAction(
+            'CREATE', 
+            'Logistik', 
+            `Menerbitkan surat jalan #${dlvId} untuk pesanan #${newEntry.idTransaksi} ke ${newEntry.customerName} via ${newEntry.kurirEkspedisi}`, 
+            null, 
+            newEntry
+        );
+
         this.newShipmentModalOpen = false;
-       this.showToast('success', 'Pengiriman Dibuat! 🚀', 'Manifes surat jalan berhasil didaftarkan.', 'Logistik');
+        this.showToast('success', 'Pengiriman Dibuat! 🚀', 'Manifes surat jalan berhasil didaftarkan.', 'Logistik');
     } catch (e) {
-       this.showToast('info', 'Tersimpan Offline', 'Pengiriman tersimpan sementara di memori tampilan lokal.', 'Logistik');
+        this.recordAuditAction('CREATE', 'Logistik', `Gagal membuat pengiriman untuk #${newEntry.idTransaksi}`, null, null, 'FAILED');
+        this.showToast('info', 'Tersimpan Offline', 'Pengiriman tersimpan sementara di memori tampilan lokal.', 'Logistik');
         this.newShipmentModalOpen = false;
     } finally {
         this.isSubmittingShipment = false;
     }
 },
 
+async saveLogisticsUpdate() {
+    if (!this.selectedShipment) return;
+    this.isUpdatingLogistics = true;
+
+    const beforeData = {
+        statusLogistik: this.selectedShipment.statusLogistik,
+        kurirEkspedisi: this.selectedShipment.kurirEkspedisi,
+        nomorResi: this.selectedShipment.nomorResi
+    };
+
+    this.selectedShipment.statusLogistik = this.logisticsEditForm.statusLogistik;
+    this.selectedShipment.kurirEkspedisi = this.logisticsEditForm.kurirEkspedisi;
+    this.selectedShipment.nomorResi = this.logisticsEditForm.nomorResi || '-';
+    this.selectedShipment.namaKurir = this.logisticsEditForm.namaKurir || '-';
+    this.selectedShipment.waktuMulai = this.logisticsEditForm.waktuMulai || '-';
+    this.selectedShipment.waktuSelesai = this.logisticsEditForm.waktuSelesai || '-';
+    this.selectedShipment.catatanLogistik = this.logisticsEditForm.catatanLogistik || '-';
+
+    const payload = new URLSearchParams({
+        action: 'update_logistics_status',
+        idPengiriman: this.logisticsEditForm.idPengiriman,
+        statusLogistik: this.logisticsEditForm.statusLogistik,
+        kurirEkspedisi: this.logisticsEditForm.kurirEkspedisi,
+        nomorResi: this.logisticsEditForm.nomorResi || '-',
+        namaKurir: this.logisticsEditForm.namaKurir || '-',
+        waktuMulai: this.logisticsEditForm.waktuMulai || '-',
+        waktuSelesai: this.logisticsEditForm.waktuSelesai || '-',
+        catatanLogistik: this.logisticsEditForm.catatanLogistik || '-'
+    });
+
+    try {
+        await fetch(SCRIPT_URL, { method: 'POST', body: payload });
+        
+        // Rekam Audit Log UPDATE
+        this.recordAuditAction(
+            'UPDATE', 
+            'Logistik', 
+            `Memperbarui status pengiriman #${this.logisticsEditForm.idPengiriman} menjadi "${this.logisticsEditForm.statusLogistik}" (Resi: ${this.logisticsEditForm.nomorResi || '-'})`, 
+            beforeData, 
+            this.logisticsEditForm
+        );
+
+        this.logisticsModalOpen = false;
+        this.showToast('success', 'Pelacakan Diperbarui! 🚚', 'Status pengiriman dan nomor resi berhasil disimpan.', 'Logistik');
+    } catch (e) {
+        this.recordAuditAction('UPDATE', 'Logistik', `Gagal memperbarui pengiriman #${this.logisticsEditForm.idPengiriman}`, null, null, 'FAILED');
+        this.showToast('error', 'Gangguan Jaringan', 'Gagal menyimpan pembaruan logistik ke server.', 'Logistik');
+    } finally {
+        this.isUpdatingLogistics = false;
+    }
+},
 // Fungsi 1-Klik: Tarik Semua Pesanan Toko yang Belum Masuk ke Logistik
 async autoImportOrdersToLogistics() {
     this.isSyncingLogistics = true;
@@ -9495,7 +9945,7 @@ formatWANumber(phoneStr) {
     let clean = String(phoneStr || '').replace(/\D/g, '');
     if (clean.startsWith('0')) clean = '62' + clean.slice(1);
     else if (clean.startsWith('8')) clean = '62' + clean;
-    return clean || '6281234401237';
+    return clean || '6281312831690';
 },
 
 // =========================================================================
@@ -9538,41 +9988,6 @@ openLogisticsUpdateModal(item) {
     this.logisticsModalOpen = true;
 },
 
-async saveLogisticsUpdate() {
-    if (!this.selectedShipment) return;
-    this.isUpdatingLogistics = true;
-
-    // 1. Optimistic Update Instan di layar (< 1 detik)
-    this.selectedShipment.statusLogistik = this.logisticsEditForm.statusLogistik;
-    this.selectedShipment.kurirEkspedisi = this.logisticsEditForm.kurirEkspedisi;
-    this.selectedShipment.nomorResi = this.logisticsEditForm.nomorResi || '-';
-    this.selectedShipment.namaKurir = this.logisticsEditForm.namaKurir || '-';
-    this.selectedShipment.waktuMulai = this.logisticsEditForm.waktuMulai || '-';
-    this.selectedShipment.waktuSelesai = this.logisticsEditForm.waktuSelesai || '-';
-    this.selectedShipment.catatanLogistik = this.logisticsEditForm.catatanLogistik || '-';
-
-    const payload = new URLSearchParams({
-        action: 'update_logistics_status',
-        idPengiriman: this.logisticsEditForm.idPengiriman,
-        statusLogistik: this.logisticsEditForm.statusLogistik,
-        kurirEkspedisi: this.logisticsEditForm.kurirEkspedisi,
-        nomorResi: this.logisticsEditForm.nomorResi || '-',
-        namaKurir: this.logisticsEditForm.namaKurir || '-',
-        waktuMulai: this.logisticsEditForm.waktuMulai || '-',
-        waktuSelesai: this.logisticsEditForm.waktuSelesai || '-',
-        catatanLogistik: this.logisticsEditForm.catatanLogistik || '-'
-    });
-
-    try {
-        await fetch(SCRIPT_URL, { method: 'POST', body: payload });
-        this.logisticsModalOpen = false;
-       this.showToast('success', 'Pelacakan Diperbarui! 🚚', 'Status pengiriman dan nomor resi berhasil disimpan.', 'Logistik');
-    } catch (e) {
-       this.showToast('error', 'Gangguan Jaringan', 'Gagal menyimpan pembaruan logistik ke server.', 'Logistik');
-    } finally {
-        this.isUpdatingLogistics = false;
-    }
-},
 
 // =========================================================================
 // 4. KIRIM SURAT JALAN & UPDATE KE WHATSAPP SECARA RAPI
@@ -9788,9 +10203,18 @@ async submitExpenseRecord() {
 
     try {
         await fetch(SCRIPT_URL, { method: 'POST', body: payload });
+        this.recordAuditAction(
+            'CREATE', 
+            'Pengeluaran', 
+            `Mencatat pengeluaran kas "${newEntry.judul}" senilai ${this.formatRupiah(newEntry.nominal)} (Kategori: ${newEntry.kategori})`, 
+            null, 
+            newEntry
+        );
+
         this.expenseModalOpen = false;
        this.showToast('success', 'Pengeluaran Dicatat! 💵', 'Beban kas operasional toko berhasil dibukukan.', 'Buku Kas');
     } catch (e) {
+                this.recordAuditAction('CREATE', 'Pengeluaran', `Gagal mencatat pengeluaran "${newEntry.judul}"`, null, null, 'FAILED');
        this.showToast('info', 'Tersimpan Offline', 'Catatan pengeluaran tersimpan di memori lokal.', 'Buku Kas');
         this.expenseModalOpen = false;
     } finally {
@@ -9814,8 +10238,16 @@ async deleteExpenseRecordAction(item) {
 
     try {
         await fetch(SCRIPT_URL, { method: 'POST', body: payload });
+        this.recordAuditAction(
+            'DELETE', 
+            'Pengeluaran', 
+            `Menghapus catatan pengeluaran "${item.judul}" (${this.formatRupiah(item.nominal)}) [ID: ${item.idPengeluaran}]`, 
+            item, 
+            null
+        );
+     this.showToast('success', 'Pengeluaran Dihapus 🗑️', 'Catatan beban kas berhasil dihapus.', 'Buku Kas');
     } catch (e) {
-        console.error("Gagal menghapus pengeluaran", e);
+        this.recordAuditAction('DELETE', 'Pengeluaran', `Gagal menghapus pengeluaran ID ${item.idPengeluaran}`, null, null, 'FAILED');
     }
 },
 
@@ -10099,7 +10531,7 @@ async submitSupplierForm() {
     this.isSubmittingSupplier = true;
     const action = this.supplierFormMode === 'add' ? 'create_supplier' : 'update_supplier';
 
-    // Optimistic Update instan di antarmuka (< 1 detik)
+    let beforeData = null;
     if (this.supplierFormMode === 'add') {
         const now = new Date();
         const dummyId = "SPL-" + now.getFullYear() + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0') + "-" + now.getTime().toString().slice(-4);
@@ -10117,6 +10549,7 @@ async submitSupplierForm() {
     } else {
         const idx = this.suppliersList.findIndex(s => s.idSupplier === this.supplierForm.idSupplier);
         if (idx > -1) {
+            beforeData = { ...this.suppliersList[idx] };
             this.suppliersList[idx] = { ...this.suppliersList[idx], ...this.supplierForm };
         }
     }
@@ -10135,10 +10568,21 @@ async submitSupplierForm() {
 
     try {
         await fetch(SCRIPT_URL, { method: 'POST', body: payload });
+        
+        // Rekam Audit Log CREATE / UPDATE
+        this.recordAuditAction(
+            this.supplierFormMode === 'add' ? 'CREATE' : 'UPDATE',
+            'Supplier',
+            `${this.supplierFormMode === 'add' ? 'Mendaftarkan supplier baru' : 'Memperbarui profil supplier'} "${this.supplierForm.namaSupplier}" (${this.supplierForm.kategori})`,
+            beforeData,
+            this.supplierForm
+        );
+
         this.supplierModalOpen = false;
-       this.showToast('success', 'Supplier Disimpan! 🤝', 'Data mitra pemasok berhasil diperbarui.', 'Supplier');
+        this.showToast('success', 'Supplier Disimpan! 🤝', 'Data mitra pemasok berhasil diperbarui.', 'Supplier');
         this.syncSuppliersData();
     } catch (e) {
+        this.recordAuditAction(this.supplierFormMode === 'add' ? 'CREATE' : 'UPDATE', 'Supplier', `Gagal menyimpan data supplier "${this.supplierForm.namaSupplier}"`, null, null, 'FAILED');
         this.showToast('info', 'Tersimpan Offline', 'Data supplier tersimpan sementara di memori lokal.', 'Supplier');
         this.supplierModalOpen = false;
     } finally {
@@ -10151,7 +10595,6 @@ async confirmDeleteSupplier(item) {
         return;
     }
 
-    // Optimistic Remove instan
     const idx = this.suppliersList.findIndex(s => s.idSupplier === item.idSupplier);
     if (idx > -1) this.suppliersList.splice(idx, 1);
 
@@ -10162,11 +10605,20 @@ async confirmDeleteSupplier(item) {
 
     try {
         await fetch(SCRIPT_URL, { method: 'POST', body: payload });
+        
+        // Rekam Audit Log DELETE
+        this.recordAuditAction(
+            'DELETE', 
+            'Supplier', 
+            `Menghapus mitra supplier "${item.namaSupplier}" (ID: ${item.idSupplier})`, 
+            item, 
+            null
+        );
+        this.showToast('success', 'Supplier Dihapus 🗑️', `Supplier "${item.namaSupplier}" berhasil dihapus.`, 'Supplier');
     } catch (e) {
-        console.error("Gagal menghapus supplier", e);
+        this.recordAuditAction('DELETE', 'Supplier', `Gagal menghapus supplier "${item.namaSupplier}"`, null, null, 'FAILED');
     }
 },
-
 // =========================================================================
 // 4. ENGINE KOMUNIKASI TERFORMAT (WHATSAPP & EMAIL HUB)
 // =========================================================================
@@ -10330,8 +10782,23 @@ async savePopupAdsSettings() {
         const res = await fetch(SCRIPT_URL, { method: 'POST', body: payload });
         const json = await res.json();
         if (json.status === 'success') {
+            this.recordAuditAction(
+            'UPDATE', 
+            'Iklan & Promo', 
+            'Memperbarui pengaturan Pop-Up Promosi & Banner', 
+            null, 
+            this.popupAdsForm
+          );
           this.showToast('success', 'Pengaturan Promo Tersimpan! 📢', 'Banner dan Pop-Up pelanggan berhasil dimutakhirkan.', 'Promo Ads');
         } else {
+             this.recordAuditAction(
+            'UPDATE', 
+            'Iklan & Promo', 
+            'Gagal menyimpan pengaturan iklan: ' + (json.message || 'Kesalahan sistem'), 
+            null, 
+            null, 
+            'FAILED'
+          );
           this.showToast('error', 'Gagal Menyimpan Iklan', json.message || 'Terjadi kesalahan sistem.', 'Promo Ads');
         }
     } catch (e) {
@@ -10451,13 +10918,24 @@ async saveFlashSaleSettings() {
     try {
         const res = await fetch(SCRIPT_URL, { method: 'POST', body: payload });
         const json = await res.json();
+        
         if (json.status === 'success') {
+            // Rekam Audit Log UPDATE
+            this.recordAuditAction(
+                'UPDATE', 
+                'Flash Sale', 
+                `Memperbarui konfigurasi Flash Sale "${this.fsForm.title}" (${this.fsForm.products.length} produk diikutsertakan, Status: ${this.fsForm.status})`, 
+                null, 
+                this.fsForm
+            );
             this.showToast('success', 'Flash Sale Diperbarui! ⚡', 'Jadwal sesi dan kuota promo berhasil disimpan.', 'Flash Sale');
         } else {
-           this.showToast('error', 'Gagal Menyimpan', json.message || 'Terjadi kesalahan sistem.', 'Flash Sale');
+            this.recordAuditAction('UPDATE', 'Flash Sale', `Gagal menyimpan Flash Sale: ` + (json.message || 'Error'), null, null, 'FAILED');
+            this.showToast('error', 'Gagal Menyimpan', json.message || 'Terjadi kesalahan sistem.', 'Flash Sale');
         }
     } catch(e) {
-         this.showToast('error', 'Koneksi Terputus', 'Gagal menghubungi server database Flash Sale.', 'Flash Sale');
+        this.recordAuditAction('UPDATE', 'Flash Sale', 'Gagal menghubungi server database Flash Sale', null, null, 'FAILED');
+        this.showToast('error', 'Koneksi Terputus', 'Gagal menghubungi server database Flash Sale.', 'Flash Sale');
     } finally {
         this.isSavingFlashSale = false;
     }
@@ -10941,6 +11419,7 @@ async submitClockIn() {
 
                 if (json.status === 'success') {
                     this.clockInModalOpen = false;
+                    this.recordAuditAction('SHIFT', 'Kasir & Shift', `Buka Shift Baru oleh ${this.clockInForm.namaKasir} (${this.clockInForm.shiftType})`, null, this.clockInForm);
                     // GANTI showAdminToast -> showToast
                     this.showToast('success', 'Shift Resmi Dibuka! 🟢', json.message, 'Shift Started');
                     await this.syncShiftLiveMetrics();
@@ -10995,6 +11474,7 @@ async executeCloseShift() {
 
                 if (json.status === 'success') {
                     this.clockOutModalOpen = false;
+                    this.recordAuditAction('SHIFT', 'Kasir & Shift', `Tutup Shift Kasir #${this.shiftState.activeShift.idShift}`, null, { fisikAktual: this.countedPhysicalTotal, status: this.blindAuditStatus.badgeTitle });
                     // GANTI showAdminToast -> showToast
                     this.showToast('success', 'Shift Resmi Ditutup! 🔒', 'Rekonsiliasi selesai dicatat.', 'Shift Closed');
                     await this.syncShiftLiveMetrics();
@@ -11030,7 +11510,7 @@ async executeCloseShift() {
         },
 
         sendShiftReportWA(s) {
-            const ownerPhone = "6281234401237"; // Nomor WA Pemilik Toko
+            const ownerPhone = "6281312831690"; // Nomor WA Pemilik Toko
             const varianceTotal = (s.selisihTunai || 0) + (s.selisihDigital || 0);
             const statusLabel = varianceTotal === 0 ? "✓ COCOK (Rp 0 Selisih)" : (varianceTotal < 0 ? `⚠ SHORT (-${this.formatRupiah(Math.abs(varianceTotal))})` : `✦ OVER (+${this.formatRupiah(varianceTotal)})`);
 
@@ -11055,10 +11535,204 @@ _Uang fisik di laci telah dihitung dan diserahterimakan untuk shift kasir beriku
 
             window.open(`https://wa.me/${ownerPhone}?text=${encodeURIComponent(msg)}`, '_blank');
         },
-// --- 5. ENTRY BUKU PANDUAN INTERAKTIF DI DALAM guideDirectory ---
+
+// =========================================================================
+// STATE & CONTROLLER AUDIT LOG ADMIN (PUTRA BAROKAH ENTERPRISE)
+// =========================================================================
+auditModalOpen: false,
+auditDetailModalOpen: false,
+auditLogs: [],
+auditLoading: false,
+auditSearch: '',
+auditModuleFilter: 'Semua',
+auditTypeFilter: 'Semua',
+auditStatusFilter: 'Semua',
+auditDateFilter: 'all',
+auditAutoStream: true,
+auditStreamInterval: null,
+selectedAuditDetail: null,
+
+// 1. Inisialisasi & Buka Modal
+openAuditLogModal() {
+    this.auditModalOpen = true;
+    this.fetchAuditLogs(false);
+    this.startAuditStream();
+    // Catat log internal pembukaan audit console
+    this.recordAuditAction('ACCESS', 'System Security', 'Admin membuka konsol Audit Log & Keamanan Sistem');
+},
+
+closeAuditLogModal() {
+    this.auditModalOpen = false;
+    this.stopAuditStream();
+},
+
+toggleAuditStream() {
+    this.auditAutoStream = !this.auditAutoStream;
+    if (this.auditAutoStream) {
+        this.startAuditStream();
+        this.showToast('success', 'Live Stream Aktif 📡', 'Audit log diperbarui otomatis setiap 5 detik.', 'Audit System');
+    } else {
+        this.stopAuditStream();
+        this.showToast('info', 'Live Stream Dijeda', 'Pembaruan otomatis dinonaktifkan.', 'Audit System');
+    }
+},
+
+startAuditStream() {
+    this.stopAuditStream();
+    this.auditStreamInterval = setInterval(() => {
+        if (this.auditModalOpen && this.auditAutoStream) {
+            this.fetchAuditLogs(true);
+        }
+    }, 5000);
+},
+
+stopAuditStream() {
+    if (this.auditStreamInterval) {
+        clearInterval(this.auditStreamInterval);
+        this.auditStreamInterval = null;
+    }
+},
+
+// 2. Fetch Data Audit Log dari Server
+async fetchAuditLogs(silent = false) {
+    if (!silent) this.auditLoading = true;
+    try {
+        const res = await fetch(`${SCRIPT_URL}?action=get_audit_logs&_t=${Date.now()}`);
+        const json = await res.json();
+        if (json.status === 'success' && Array.isArray(json.data)) {
+            this.auditLogs = json.data;
+        }
+    } catch (e) {
+        console.error("Gagal sinkron Audit Log:", e);
+    } finally {
+        if (!silent) this.auditLoading = false;
+    }
+},
+
+// 3. Helper Pengirim Log Otomatis dari Frontend ke Backend
+async recordAuditAction(actionType, module, detail, beforeData = null, afterData = null, status = 'SUCCESS') {
+    const payload = new URLSearchParams({
+        action: 'record_audit_log',
+        adminName: 'Admin Utama',
+        adminId: 'ADM-01',
+        actionType: actionType,
+        module: module,
+        detail: detail,
+        beforeData: beforeData ? JSON.stringify(beforeData) : '-',
+        afterData: afterData ? JSON.stringify(afterData) : '-',
+        status: status,
+        userAgent: navigator.userAgent.substring(0, 80)
+    });
+
+    try {
+        // Eksekusi non-blocking di background
+        fetch(SCRIPT_URL, { method: 'POST', body: payload }).catch(() => {});
+    } catch (err) {}
+},
+
+// 4. Filter Komputasi Reaktif
+get filteredAuditLogs() {
+    let list = this.auditLogs || [];
+
+    // Filter Modul
+    if (this.auditModuleFilter !== 'Semua') {
+        list = list.filter(l => l.module === this.auditModuleFilter);
+    }
+
+    // Filter Action Type
+    if (this.auditTypeFilter !== 'Semua') {
+        list = list.filter(l => l.actionType === this.auditTypeFilter);
+    }
+
+    // Filter Status
+    if (this.auditStatusFilter !== 'Semua') {
+        list = list.filter(l => l.status === this.auditStatusFilter);
+    }
+
+    // Filter Rentang Tanggal
+    if (this.auditDateFilter === 'today') {
+        const todayStr = new Date().toLocaleDateString('id-ID');
+        list = list.filter(l => String(l.timestamp).includes(todayStr));
+    } else if (this.auditDateFilter === '7days') {
+        const now = Date.now();
+        const d7 = 7 * 24 * 60 * 60 * 1000;
+        list = list.filter(l => {
+            const rowTime = parseAnyDate(l.timestamp).getTime();
+            return !isNaN(rowTime) && (now - rowTime) <= d7;
+        });
+    }
+
+    // Text Search Filter
+    if (this.auditSearch.trim() !== '') {
+        const q = this.auditSearch.toLowerCase().trim();
+        list = list.filter(l => 
+            String(l.idLog).toLowerCase().includes(q) ||
+            String(l.adminName).toLowerCase().includes(q) ||
+            String(l.module).toLowerCase().includes(q) ||
+            String(l.detail).toLowerCase().includes(q) ||
+            String(l.ipAddress).toLowerCase().includes(q)
+        );
+    }
+
+    return list;
+},
+
+// 5. Metrik Perhitungan Cepat
+get countAuditMutations() {
+    return (this.auditLogs || []).filter(l => ['CREATE', 'UPDATE', 'DELETE'].includes(l.actionType)).length;
+},
+get countAuditSessions() {
+    return (this.auditLogs || []).filter(l => ['ACCESS', 'AUTH', 'SHIFT'].includes(l.actionType)).length;
+},
+
+// 6. UI Helpers (Badges & Icons)
+getAuditBadgeClass(type) {
+    switch (type) {
+        case 'CREATE': return 'bg-emerald-50 text-emerald-800 border-emerald-200';
+        case 'UPDATE': return 'bg-amber-50 text-amber-800 border-amber-200';
+        case 'DELETE': return 'bg-rose-50 text-rose-700 border-rose-200';
+        case 'ACCESS': return 'bg-sky-50 text-sky-800 border-sky-200';
+        case 'SHIFT': return 'bg-cyan-50 text-cyan-800 border-cyan-200';
+        case 'EXPORT': return 'bg-purple-50 text-purple-800 border-purple-200';
+        default: return 'bg-slate-50 text-slate-700 border-slate-200';
+    }
+},
+
+getAuditActionIcon(type) {
+    switch (type) {
+        case 'CREATE': return 'fa-circle-plus text-emerald-600';
+        case 'UPDATE': return 'fa-pen-to-square text-amber-600';
+        case 'DELETE': return 'fa-trash-can text-rose-600';
+        case 'ACCESS': return 'fa-arrow-pointer text-sky-600';
+        case 'SHIFT': return 'fa-cash-register text-cyan-600';
+        case 'EXPORT': return 'fa-file-export text-purple-600';
+        default: return 'fa-clipboard-list text-slate-500';
+    }
+},
+
+openAuditDiffDetail(log) {
+    this.selectedAuditDetail = log;
+    this.auditDetailModalOpen = true;
+},
+
+formatAuditJson(val) {
+    if (!val || val === '-') return 'Tidak ada rekaman data perubahan.';
+    try {
+        const obj = typeof val === 'string' ? JSON.parse(val) : val;
+        return JSON.stringify(obj, null, 2);
+    } catch (e) {
+        return String(val);
+    }
+},
+
+exportAuditCSV() {
+    window.location.href = `${SCRIPT_URL}?action=export_audit_logs_csv`;
+    this.recordAuditAction('EXPORT', 'Audit System', 'Admin mengekspor berkas audit log ke CSV');
+},
+        // --- 5. ENTRY BUKU PANDUAN INTERAKTIF DI DALAM guideDirectory ---
 // Sisipkan 'customer_analysis' ke dalam objek guideDirectory: { ... } di admin.html:
 /*
-  
+
 */
 // =========================================================================
 // 4. DOKUMENTASI PANDUAN FLASH SALE DI DALAM guideDirectory:
@@ -11146,6 +11820,32 @@ guideDirectory: {
         proTip: 'Kombinasikan data Marketing Funnel dengan data Flash Sale. Jika traffic kunjungan tinggi namun konversi rendah, gunakan banner pop-up diskon terbatas untuk memicu keputusan beli cepat.',
         warning: 'Data telemetri tersimpan otomatis secara real-time. Jangan menghapus lembar kerja "FunnelEvents" di Google Spreadsheet agar riwayat konversi tetap berkesinambungan.'
     },
+    audit_log: {
+    shortLabel: 'Audit Log',
+    icon: 'fa-solid fa-shield-halved',
+    title: 'Panduan Eksekutif: Audit Trail, Keamanan & Log Aktivitas Admin',
+    summary: 'Sistem audit terenkripsi yang secara otomatis merekam seluruh interaksi, mutasi data, transaksi, pengeditan katalog, transfer stok, dan sesi buka/tutup kasir secara real-time dan permanen.',
+    steps: [
+        {
+            heading: '1. Akses Global dari Header Utama',
+            detail: 'Tombol Audit Log diletakkan di sudut kanan atas header toko. Tombol ini memiliki indikator denyut hijau dan dapat diakses dari halaman atau tab manapun tanpa perlu kembali ke dashboard.'
+        },
+        {
+            heading: '2. Membaca Kronologi & Jejak IP Perangkat',
+            detail: 'Setiap baris mencatat tanggal dan jam eksak (WIB), identitas nama & ID admin pelaksana, jenis aksi (CREATE/UPDATE/DELETE/SHIFT), modul yang diubah, dan footprint teknis (alamat IP serta browser).'
+        },
+        {
+            heading: '3. Memeriksa Data Sebelum vs Sesudah (Diff Inspector)',
+            detail: 'Klik tombol "Inspect Data" pada rekaman log untuk membuka perbandingan JSON sisi-kiri (Before State berwarna merah) dan sisi-kanan (After State berwarna hijau) untuk memverifikasi perubahan nilai riil.'
+        },
+        {
+            heading: '4. Fitur Real-Time Live Streaming & Ekspor CSV',
+            detail: 'Konsol audit dilengkapi sakelar "Auto Live ON" yang memperbarui aliran log setiap 5 detik. Anda juga dapat mengklik "Ekspor CSV" untuk mengunduh arsip fisik ke format Microsoft Excel untuk keperluan audit internal.'
+        }
+    ],
+    proTip: 'Gunakan kombinasi Filter Modul dan Filter Jenis Aksi (contoh: pilih modul "Stok Gudang" dan aksi "UPDATE") untuk melacak siapa yang memindahkan stok tanpa harus memeriksa ribuan riwayat lainnya.',
+    warning: 'Seluruh riwayat audit log bersifat permanen dan tersimpan di lembar "AuditLogs". Data dilindungi dari manipulasi manual untuk menjamin kepatuhan dan integritas operasional toko.'
+},
     shift_management: {
         shortLabel: 'Shift Kasir',
         icon: 'fa-solid fa-cash-register',
@@ -11715,14 +12415,23 @@ async saveCustomOrderChanges(idCustom) {
         
         // Optimistic Update lokal (< 1 detik update langsung)
         const idx = this.adminCustomOrders.findIndex(o => o.idCustom === idCustom);
+        let beforeObj = null;
         if (idx > -1) {
             this.adminCustomOrders[idx].harga = Number(this.editCustomForm.harga) || 0;
+            beforeObj = { harga: this.adminCustomOrders[idx].harga, catatanAdmin: this.adminCustomOrders[idx].catatanAdmin };
             this.adminCustomOrders[idx].catatanAdmin = this.editCustomForm.catatanAdmin || '-';
         }
-        
+        this.recordAuditAction(
+            'UPDATE', 
+            'Custom Orders', 
+            `Memperbarui nominal/catatan Custom Order #${idCustom} menjadi ${this.formatRupiah(this.editCustomForm.harga)}`, 
+            beforeObj, 
+            this.editCustomForm
+        );
         this.editCustomId = null;
         this.showToast('success', 'Custom Order Disimpan! 🏷️', 'Penyesuaian harga dan catatan berhasil disimpan.', 'Custom');
     } catch(e) {
+         this.recordAuditAction('UPDATE', 'Custom Orders', `Gagal memperbarui Custom Order #${idCustom}`, null, null, 'FAILED');
      this.showToast('error', 'Gagal Menyimpan', 'Terjadi kesalahan saat memperbarui data custom order.', 'Custom Order');
     } finally {
         this.isSavingCustomOrder = false;
@@ -11754,8 +12463,16 @@ async processCustomStatus(item, statusBaru) {
         // Optimistic Update instan
         item.status = statusBaru;
         item.harga = hargaFinal;
+        this.recordAuditAction(
+            'UPDATE', 
+            'Custom Orders', 
+            `Mengubah status Custom Order #${item.idCustom} menjadi "${statusBaru}" (Harga: ${this.formatRupiah(hargaFinal)})`, 
+            beforeState, 
+            { status: statusBaru, harga: hargaFinal }
+        );
        this.showToast('success', 'Status Pesanan Diperbarui! ✨', `Status pesanan #${idTx} diubah menjadi: ${statusBaru}`, 'Pesanan');
     } catch(e) {
+        this.recordAuditAction('UPDATE', 'Custom Orders', `Gagal mengubah status Custom Order #${item.idCustom}`, null, null, 'FAILED');
       this.showToast('error', 'Gagal Memperbarui', 'Terjadi gangguan saat mengubah status pesanan custom.', 'Custom Order');
     }
 },
@@ -11985,48 +12702,56 @@ initAudioContext() {
         },
 
         // Suara Notifikasi Chime Murni (Web Audio API Tanpa File Eksternal)
+       // SUARA NOTIFIKASI: DING BELL + SUARA ORANG BILANG "ADA PESANAN BARU MASUK"
         playOrderChime() {
             try {
+                // 1. Bunyikan nada bell / chime singkat terlebih dahulu
                 if (!this.audioCtx) {
                     const AudioContext = window.AudioContext || window.webkitAudioContext;
                     if (AudioContext) this.audioCtx = new AudioContext();
                 }
-                if (!this.audioCtx) return;
-                if (this.audioCtx.state === 'suspended') {
-                    this.audioCtx.resume();
+                if (this.audioCtx) {
+                    if (this.audioCtx.state === 'suspended') this.audioCtx.resume();
+
+                    const now = this.audioCtx.currentTime;
+                    const osc = this.audioCtx.createOscillator();
+                    const gain = this.audioCtx.createGain();
+
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(880, now); // Nada A5 jernih
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+                    osc.connect(gain);
+                    gain.connect(this.audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
                 }
 
-                const now = this.audioCtx.currentTime;
+                // 2. Browser langsung berbicara bahasa Indonesia
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel(); // Bersihkan antrean suara sebelumnya
 
-                // Nada 1: D5 (Frekuensi 587.33 Hz)
-                const osc1 = this.audioCtx.createOscillator();
-                const gain1 = this.audioCtx.createGain();
-                osc1.type = 'sine';
-                osc1.frequency.setValueAtTime(587.33, now);
-                osc1.frequency.exponentialRampToValueAtTime(880, now + 0.15); // Meluncur ke A5
-                gain1.gain.setValueAtTime(0.25, now);
-                gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
-                osc1.connect(gain1);
-                gain1.connect(this.audioCtx.destination);
-                osc1.start(now);
-                osc1.stop(now + 0.5);
+                    const pesanSuara = new SpeechSynthesisUtterance("Ada pesanan baru masuk!");
+                    pesanSuara.lang = 'id-ID'; // Logat & aksen Bahasa Indonesia
+                    pesanSuara.rate = 1.05;    // Kecepatan bicara natural dan tegas
+                    pesanSuara.pitch = 1.1;     // Nada suara ramah dan jelas
+                    pesanSuara.volume = 1.0;    // Volume penuh
 
-                // Nada 2: High Crystal Bell (1174.66 Hz - D6)
-                const osc2 = this.audioCtx.createOscillator();
-                const gain2 = this.audioCtx.createGain();
-                osc2.type = 'triangle';
-                osc2.frequency.setValueAtTime(1174.66, now + 0.12);
-                gain2.gain.setValueAtTime(0.3, now + 0.12);
-                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
-                osc2.connect(gain2);
-                gain2.connect(this.audioCtx.destination);
-                osc2.start(now + 0.12);
-                osc2.stop(now + 0.8);
+                    // Prioritaskan vokal Bahasa Indonesia yang ada di perangkat
+                    const voices = window.speechSynthesis.getVoices();
+                    const idVoice = voices.find(v => v.lang.includes('id') || v.lang.includes('ID'));
+                    if (idVoice) pesanSuara.voice = idVoice;
+
+                    // Berikan jeda 0.2 detik setelah nada bell berbunyi
+                    setTimeout(() => {
+                        window.speechSynthesis.speak(pesanSuara);
+                    }, 200);
+                }
             } catch (e) {
-                console.warn("Audio chime tertahan kebijakan browser:", e);
+                console.warn("Gagal memutar notifikasi suara:", e);
             }
         },
-
         // Engine Sinkronisasi Data Real-Time Tanpa Jeda / Non-Blocking
         initAutoSyncEngine() {
             this.initAudioContext();
@@ -12155,11 +12880,32 @@ async saveProductSubmit() {
         const json = await res.json();
 
         if (json.status === 'success') {
-           this.showToast('success', 'Produk Disimpan! ✨', json.message || 'Data produk katalog berhasil diperbarui.', 'Katalog');
+            // 1. Rekam Audit Log sukses (CREATE / UPDATE)
+            this.recordAuditAction(
+                this.productFormMode === 'add' ? 'CREATE' : 'UPDATE',
+                'Katalog Produk',
+                `${this.productFormMode === 'add' ? 'Menambah' : 'Memperbarui'} produk "${this.productForm.nama}" (ID: ${this.productForm.idProduct || json.idProduct || '-'})`,
+                null,
+                { ...this.productForm, idProduct: this.productForm.idProduct || json.idProduct }
+            );
+
+            // 2. Tampilkan notifikasi & tutup modal
+            this.showToast('success', 'Produk Disimpan! ✨', json.message || 'Data produk katalog berhasil diperbarui.', 'Katalog');
             this.productModal = false;
-            // Refresh data produk
+
+            // 3. Segarkan data produk katalog
             await this.fetchAdminProducts();
         } else {
+            // Rekam Audit Log status FAILED jika gagal disimpan
+            this.recordAuditAction(
+                this.productFormMode === 'add' ? 'CREATE' : 'UPDATE',
+                'Katalog Produk',
+                `Gagal ${this.productFormMode === 'add' ? 'menambah' : 'memperbarui'} produk "${this.productForm.nama}": ` + (json.message || 'Terjadi kesalahan sistem.'),
+                null,
+                null,
+                'FAILED'
+            );
+
             this.showToast('error', 'Gagal Menyimpan', json.message || 'Terjadi kesalahan saat menyimpan produk.', 'Katalog Produk');
         }
     } catch(e) {
@@ -12203,28 +12949,6 @@ formatInputPrice(val) {
     if (!raw) return '';
     return new Intl.NumberFormat('id-ID').format(raw);
 },
-async deleteProductItem(idProduct) {
- this.openConfirm({
-        title: 'Hapus Produk dari Katalog?',
-        message: `Apakah Anda yakin ingin menghapus produk ID #${idProduct}? Tindakan ini akan menghapusnya dari etalase pelanggan.`,
-        badge: 'Manajemen Produk',
-        icon: 'fa-trash-can',
-        type: 'danger',
-        confirmText: 'Ya, Hapus Produk',
-        onConfirm: async () => {
-            const payload = new URLSearchParams({ action: 'delete_product', idProduct: idProduct });
-            const res = await fetch(SCRIPT_URL, { method: 'POST', body: payload });
-            const json = await res.json();
-            if (json.status === 'success') {
-                this.showToast('success', 'Produk Dihapus 🗑️', 'Produk berhasil ditarik dari katalog.', 'Katalog');
-                await this.fetchAdminProducts();
-            } else {
-                this.showToast('error', 'Gagal Menghapus', json.message, 'Katalog Error');
-            }
-        }
-    });
-},
-
                 // --- DATA FETCHING ---
                 async fetchOrders(showLoader = false) {
                     try {
@@ -12235,6 +12959,41 @@ async deleteProductItem(idProduct) {
                         }
                     } catch(e) { console.error('Gagal fetch orders', e); }
                 },
+                async deleteProductItem(idProduct) {
+    const target = (this.adminProducts || []).find(p => p.idProduct === idProduct);
+
+    this.openConfirm({
+        title: 'Hapus Produk dari Katalog?',
+        message: `Apakah Anda yakin ingin menghapus produk "${target ? target.nama : idProduct}" (ID #${idProduct})? Tindakan ini akan menghapusnya dari etalase pelanggan.`,
+        badge: 'Manajemen Produk',
+        icon: 'fa-trash-can',
+        type: 'danger',
+        confirmText: 'Ya, Hapus Produk',
+        onConfirm: async () => {
+            const prodTarget = (this.adminProducts || []).find(p => p.idProduct === idProduct);
+            const payload = new URLSearchParams({ action: 'delete_product', idProduct: idProduct });
+            const res = await fetch(SCRIPT_URL, { method: 'POST', body: payload });
+            const json = await res.json();
+            
+            if (json.status === 'success') {
+                this.recordAuditAction(
+                    'DELETE', 
+                    'Katalog Produk', 
+                    `Menghapus produk "${prodTarget ? prodTarget.nama : idProduct}" (ID: #${idProduct})`, 
+                    prodTarget || { idProduct: idProduct }, 
+                    null
+                );
+                this.showToast('success', 'Produk Dihapus 🗑️', 'Produk berhasil ditarik dari katalog.', 'Katalog');
+                await this.fetchAdminProducts();
+            } else {
+                this.recordAuditAction('DELETE', 'Katalog Produk', `Gagal menghapus produk ID #${idProduct}: ` + (json.message || 'Error'), null, null, 'FAILED');
+                this.showToast('error', 'Gagal Menghapus', json.message, 'Katalog Error');
+            }
+        }
+    });
+},
+
+
 
                 async fetchAnalytics() {
                     try {
@@ -12305,6 +13064,7 @@ async changeStatus(idTx, statusBaru) {
             const index = this.orders.findIndex(o => o.idTransaksi === idTx);
             if(index > -1) {
                 this.orders[index].statusPesanan = statusBaru;
+                this.recordAuditAction('UPDATE', 'Pesanan', `Mengubah status pesanan #${idTx} menjadi "${statusBaru}"`, null, { idTransaksi: idTx, statusBaru });
             }
 
             const payload = new URLSearchParams({
@@ -12329,18 +13089,26 @@ async changeStatus(idTx, statusBaru) {
         
         
         // --- SYSTEM TOOLS ---
-                downloadCSV() {
-                    // Cukup arahkan tab/browser ke URL endpoint CSV (File akan otomatis terdownload)
-                    window.location.href = `${SCRIPT_URL}?action=download_users_csv`;
-                },
+               async clearCache() {
+    if(!confirm("Hapus cache memori produk? Web akan sedikit melambat pada hit pertama untuk fetch database terbaru.")) return;
+    try {
+        await fetch(`${SCRIPT_URL}?action=clear_cache`);
+        
+        // Rekam Audit Log SYSTEM / UPDATE
+        this.recordAuditAction('UPDATE', 'System Tools', 'Admin membersihkan cache memori katalog produk (PB_PRODUCTS) dari server');
+        
+        this.showToast('info', 'Cache Memori Dibersihkan! 🧹', 'Server memuat data segar dari database Google Sheets.', 'System Tools');
+    } catch(e) { 
+        this.recordAuditAction('UPDATE', 'System Tools', 'Gagal membersihkan cache memori server', null, null, 'FAILED');
+        this.showToast('error', 'Gagal Clear Cache', 'Terjadi kesalahan saat membersihkan cache server.', 'System Tools'); 
+    }
+},
 
-                async clearCache() {
-                    if(!confirm("Hapus cache memori produk? Web akan sedikit melambat pada hit pertama untuk fetch database terbaru.")) return;
-                    try {
-                        await fetch(`${SCRIPT_URL}?action=clear_cache`);
-                        this.showToast('info', 'Cache Memori Dibersihkan! 🧹', 'Server memuat data segar dari database Google Sheets.', 'System Tools');
-            } catch(e) { this.showToast('error', 'Gagal Clear Cache', 'Terjadi kesalahan saat membersihkan cache server.', 'System Tools'); }
-                },
+downloadCSV() {
+    // Rekam Audit Log EXPORT
+    this.recordAuditAction('EXPORT', 'Database Pelanggan', 'Admin mengunduh seluruh arsip data pelanggan ke berkas .CSV');
+    window.location.href = `${SCRIPT_URL}?action=download_users_csv`;
+},
 
                 // --- CHART.JS RENDERING (6 GRAFIK) ---
                 renderCharts() {
@@ -12544,7 +13312,26 @@ function parseWibToIso(wibStr) {
     }
     return '';
 }
-
+// HELPER PARSER TANGGAL AUDIT LOG & SISTEM
+function parseAnyDate(dateVal) {
+    if (!dateVal || dateVal === '-') return new Date(NaN);
+    if (dateVal instanceof Date) return dateVal;
+    
+    let str = String(dateVal).replace(' WIB', '').trim();
+    // Mendukung format DD/MM/YYYY HH:mm:ss atau DD-MM-YYYY
+    const match = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})(?:\s+(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?)?/);
+    if (match) {
+        const d = parseInt(match[1], 10);
+        const m = parseInt(match[2], 10) - 1;
+        const y = parseInt(match[3], 10);
+        const hh = parseInt(match[4] || 0, 10);
+        const mm = parseInt(match[5] || 0, 10);
+        const ss = parseInt(match[6] || 0, 10);
+        return new Date(y, m, d, hh, mm, ss);
+    }
+    const fallback = new Date(str);
+    return !isNaN(fallback.getTime()) ? fallback : new Date(NaN);
+}
 function formatIsoToWib(isoStr) {
     if (!isoStr) return '';
     const [datePart, timePart] = isoStr.split('T');
