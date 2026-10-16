@@ -3087,13 +3087,13 @@
                                     </div>
 
                                     <!-- 5k -->
-                                    <div class="pb-denom-tile space-y-1">
-                                        <span class="text-[10px] font-bold text-amber-600">Rp 5.000</span>
-                                        <input type="number" min="0" x-model.number="denom.d50k" placeholder="0"
-                                            class="w-full bg-transparent font-mono font-bold text-right text-sm focus:outline-none">
-                                        <span class="text-[9px] text-slate-400 block text-right font-mono"
-                                            x-text="formatRupiah((denom.d5k || 0) * 5000)"></span>
-                                    </div>
+                                   <!-- 5k (SUDAH DIPERBAIKI) -->
+                        <div class="pb-denom-tile space-y-1">
+                            <span class="text-[10px] font-bold text-amber-600">Rp 5.000</span>
+                            <input type="number" min="0" x-model.number="denom.d5k" placeholder="0" 
+                                   class="w-full bg-transparent font-mono font-bold text-right text-sm focus:outline-none">
+                            <span class="text-[9px] text-slate-400 block text-right font-mono" x-text="formatRupiah((denom.d5k || 0) * 5000)"></span>
+                        </div>
 
                                     <!-- 2k -->
                                     <div class="pb-denom-tile space-y-1">
