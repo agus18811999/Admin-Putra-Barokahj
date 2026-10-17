@@ -424,6 +424,25 @@
                     SHIFT
                 </span>
             </button>
+            <!-- TOMBOL MENU: CRM & DATABASE PELANGGAN 360° (DESKTOP) -->
+<button @click="switchTab('crm_analytics')" 
+        type="button"
+        :class="currentTab === 'crm_analytics' 
+            ? 'bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-700 text-white font-bold shadow-[0_8px_20px_rgba(5,150,105,0.32)] border-emerald-500/20 translate-x-1' 
+            : 'text-slate-600 hover:text-emerald-900 hover:bg-emerald-50/80 border-transparent hover:border-emerald-100/90 font-medium'" 
+        class="w-full flex items-center justify-between px-3.5 py-3 rounded-2xl border transition-all duration-200 text-xs tracking-wide group text-left cursor-pointer">
+    <div class="flex items-center gap-3">
+        <span class="w-8 h-8 rounded-xl flex items-center justify-center text-sm transition-all"
+              :class="currentTab === 'crm_analytics' ? 'bg-white/15 text-white' : 'bg-emerald-50 text-emerald-700 group-hover:scale-110'">
+            <i class="fa-solid fa-address-card"></i>
+        </span>
+        <span class="font-bold">CRM &amp; Pelanggan 360°</span>
+    </div>
+    <span class="px-2 py-0.5 rounded-md text-[8.5px] font-mono font-black uppercase tracking-wider"
+          :class="currentTab === 'crm_analytics' ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-800'">
+        CRM
+    </span>
+</button>
 
             <!-- 2. Manajemen Pesanan -->
             <button @click="switchTab('orders')"
@@ -966,6 +985,23 @@
                         <i x-show="currentTab === 'orders'"
                             class="fa-solid fa-chevron-right text-[10px] text-emerald-200"></i>
                     </button>
+                    <!-- TOMBOL MENU: CRM & DATABASE PELANGGAN 360° (MOBILE DRAWER) -->
+<button @click="switchTab('crm_analytics'); mobileSidebarOpen = false" 
+        type="button"
+        :class="currentTab === 'crm_analytics' ? 'bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-700 text-white font-bold shadow-[0_8px_20px_rgba(5,150,105,0.32)] border-emerald-500/20 translate-x-1' : 'text-slate-600 hover:text-emerald-900 hover:bg-emerald-50/80 border-transparent font-medium'" 
+        class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl border transition-all text-xs tracking-wide text-left cursor-pointer">
+    <div class="flex items-center gap-3">
+        <span class="w-7 h-7 rounded-xl flex items-center justify-center text-xs transition-all" 
+              :class="currentTab === 'crm_analytics' ? 'bg-white/15 text-white' : 'bg-emerald-50 text-emerald-700'">
+            <i class="fa-solid fa-address-card"></i>
+        </span>
+        <span class="font-bold">CRM &amp; Pelanggan 360°</span>
+    </div>
+    <span class="px-1.5 py-0.5 rounded text-[8px] font-mono font-bold tracking-wider" 
+          :class="currentTab === 'crm_analytics' ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-800'">
+        CRM
+    </span>
+</button>
 
                     <!-- 3. Customer Funnel (Marketing Corong) -->
                     <button @click="switchTab('customer_analysis'); mobileSidebarOpen = false"
@@ -2073,6 +2109,368 @@
                 <div id="src-print-portal" class="hidden"></div>
 
             </div>
+            <!-- ========================================================================= -->
+<!-- TAB: CRM 360° & CUSTOMER LIFETIME VALUE ANALYTICS (PUTRA BAROKAH)         -->
+<!-- TEMA: LUMINOUS MINT LUXURY (IN-MEMORY CLIENT-SIDE RESOLVER)               -->
+<!-- ========================================================================= -->
+<div x-show="currentTab === 'crm_analytics' && !isLoadingData" x-cloak x-transition.opacity class="space-y-6 select-none text-left">
+    
+    <!-- 1. HERO BENTO CARDS: METRIK VITAL BASIS KONSUMEN -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
+        <!-- Card 1: Total Basis Pelanggan -->
+        <div class="bg-white/95 rounded-2xl sm:rounded-3xl border border-emerald-100/90 p-4 sm:p-5 shadow-[0_8px_25px_rgba(16,185,129,0.05)] hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block">Total Basis Konsumen</span>
+                <span class="w-7 h-7 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-users"></i>
+                </span>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span class="text-xl sm:text-2xl font-black font-mono text-slate-900" x-text="crmCustomers.length"></span>
+                <span class="text-[10px] text-emerald-700 font-bold">Profil Tunggal</span>
+            </div>
+            <span class="text-[10px] text-slate-400 font-medium mt-1 block">Web + Kasir POS + Tiket Servis</span>
+        </div>
+
+        <!-- Card 2: Sultan / VIP Tiers -->
+        <div class="bg-white/95 rounded-2xl sm:rounded-3xl border border-emerald-100/90 p-4 sm:p-5 shadow-[0_8px_25px_rgba(16,185,129,0.05)] hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-amber-700 block">Pelanggan VIP / Sultan</span>
+                <span class="w-7 h-7 rounded-xl bg-amber-50 text-amber-700 border border-amber-200 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-crown"></i>
+                </span>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span class="text-xl sm:text-2xl font-black font-mono text-amber-700" x-text="crmCountVIP"></span>
+                <span class="text-[10px] text-amber-800 font-bold bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">LTV Tinggi</span>
+            </div>
+            <span class="text-[10px] text-slate-400 font-medium mt-1 block">Belanja &gt; Rp 1,5 Juta / &gt; 5x Order</span>
+        </div>
+
+        <!-- Card 3: Alarm Siklus Servis & Optik -->
+        <div class="bg-white/95 rounded-2xl sm:rounded-3xl border border-emerald-100/90 p-4 sm:p-5 shadow-[0_8px_25px_rgba(16,185,129,0.05)] hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-teal-800 block">Alarm Pengingat Servis</span>
+                <span class="w-7 h-7 rounded-xl bg-teal-50 text-teal-700 border border-teal-200 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-bell"></i>
+                </span>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span class="text-xl sm:text-2xl font-black font-mono text-teal-800" x-text="crmCountDueService"></span>
+                <span class="text-[10px] text-teal-700 font-bold bg-teal-50 px-2 py-0.5 rounded-full border border-teal-200">Waktunya Disapa</span>
+            </div>
+            <span class="text-[10px] text-slate-400 font-medium mt-1 block">Jadwal Periksa Mata / Baterai Jam</span>
+        </div>
+
+        <!-- Card 4: Konsumen Aktif 90 Hari -->
+        <div class="bg-white/95 rounded-2xl sm:rounded-3xl border border-emerald-100/90 p-4 sm:p-5 shadow-[0_8px_25px_rgba(16,185,129,0.05)] hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-emerald-800 block">Konsumen Aktif (90 Hari)</span>
+                <span class="w-7 h-7 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+                </span>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span class="text-xl sm:text-2xl font-black font-mono text-emerald-800" x-text="crmCountActive90Days"></span>
+                <span class="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">Repeat Buyer</span>
+            </div>
+            <span class="text-[10px] text-slate-400 font-medium mt-1 block">Retensi Penjualan Sangat Baik</span>
+        </div>
+    </div>
+
+    <!-- 2. KONSOL PENCARIAN REAKTIF, FILTER SEGMEN & PENGURUTAN (SORTING) -->
+    <div class="bg-white/95 rounded-3xl border border-emerald-100/90 p-4 sm:p-5 shadow-[0_10px_30px_rgba(16,185,129,0.06)] space-y-3.5 backdrop-blur-xl">
+        <div class="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between">
+            <!-- Kolom Search Cepat Lintas Properti -->
+            <div class="relative flex-1">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-emerald-600 text-sm"></i>
+                <input type="text" 
+                       x-model="crmSearchQuery" 
+                       placeholder="Cari Nama Pelanggan, Nomor WhatsApp, atau Barang yg Pernah Dibeli (cth: 'Photochromic', 'Renata', 'Seiko')..." 
+                       class="w-full bg-[#f8fcf9] border border-emerald-200/90 rounded-2xl pl-11 pr-9 py-2.5 sm:py-3 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 focus:bg-white focus:outline-none focus:border-emerald-500 shadow-2xs font-medium">
+                <button type="button" x-show="crmSearchQuery" @click="crmSearchQuery = ''" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-xs"></i>
+                </button>
+            </div>
+
+            <!-- Dropdown Filter Segmen & Urutan -->
+            <div class="flex flex-wrap items-center gap-2 text-xs">
+                <select x-model="crmSegmentFilter" class="bg-[#f8fcf9] border border-emerald-200/90 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 focus:bg-white focus:outline-none focus:border-emerald-500 shadow-2xs cursor-pointer">
+                    <option value="Semua">Semua Segmen Pelanggan</option>
+                    <option value="VIP">👑 Pelanggan VIP / Sultan</option>
+                    <option value="Optik">👓 Pelanggan Kacamata &amp; Lensa</option>
+                    <option value="Horology">⌚ Pelanggan Arloji &amp; Baterai</option>
+                    <option value="Baru">🌱 Pelanggan Baru (&le; 30 Hari)</option>
+                    <option value="Dorman">⚠️ Perlu Disapa / Dorman (&gt; 6 Bln)</option>
+                    <option value="DueService">🔔 Waktunya Periksa / Ganti Baterai</option>
+                </select>
+
+                <select x-model="crmSortBy" class="bg-[#f8fcf9] border border-emerald-200/90 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 focus:bg-white focus:outline-none focus:border-emerald-500 shadow-2xs cursor-pointer">
+                    <option value="recency">Terbaru Aktif</option>
+                    <option value="monetary-desc">Belanja Tertinggi (LTV)</option>
+                    <option value="frequency-desc">Transaksi Terbanyak</option>
+                    <option value="name-asc">Nama (A - Z)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between text-[11px] text-slate-500 pt-1">
+            <span>Menampilkan <strong class="text-slate-900 font-mono" x-text="filteredCrmCustomers.length"></strong> dari <span x-text="crmCustomers.length"></span> pelanggan terdaftar</span>
+            <span class="text-emerald-700 font-bold flex items-center gap-1.5">
+                <i class="fa-solid fa-bolt text-amber-500"></i> Komputasi In-Memory: 0 ms Instant
+            </span>
+        </div>
+    </div>
+
+    <!-- 3. TABEL INDUK CRM (ADAPTIVE LUXURY DESKTOP TABLE & MOBILE CARDS) -->
+    <div class="bg-white/95 rounded-3xl border border-emerald-100/90 overflow-hidden shadow-[0_15px_40px_rgba(16,185,129,0.06)] backdrop-blur-xl">
+        <div class="overflow-x-auto hide-scroll">
+            <table class="w-full text-left text-sm text-slate-600 border-collapse">
+                <thead class="bg-[#f8fcf9] text-[10px] sm:text-xs uppercase tracking-wider text-emerald-800 font-extrabold border-b border-emerald-100/90">
+                    <tr>
+                        <th class="py-4 px-5 sm:px-6 whitespace-nowrap">Profil Pelanggan</th>
+                        <th class="py-4 px-5 sm:px-6 whitespace-nowrap">Kontak WhatsApp</th>
+                        <th class="py-4 px-5 sm:px-6 whitespace-nowrap">Kategori Favorit &amp; Barang</th>
+                        <th class="py-4 px-5 sm:px-6 whitespace-nowrap text-center">Frekuensi</th>
+                        <th class="py-4 px-5 sm:px-6 whitespace-nowrap text-right">Nilai Belanja (LTV)</th>
+                        <th class="py-4 px-5 sm:px-6 whitespace-nowrap">Aktivitas Terakhir</th>
+                        <th class="py-4 px-5 sm:px-6 text-center whitespace-nowrap">Inspeksi 360°</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-emerald-50 text-xs sm:text-sm">
+                    <template x-for="c in filteredCrmCustomers" :key="c.customerKey">
+                        <tr class="hover:bg-emerald-50/40 transition-colors duration-150">
+                            <!-- Kolom 1: Profil & Badges -->
+                            <td class="py-3.5 px-5 sm:px-6 whitespace-nowrap">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm text-white shadow-2xs shrink-0"
+                                         :class="c.isVIP ? 'bg-gradient-to-br from-amber-400 via-amber-500 to-yellow-600' : 'bg-gradient-to-br from-emerald-500 to-teal-700'"
+                                         x-text="c.name.substring(0,2).toUpperCase()"></div>
+                                    <div class="min-w-0">
+                                        <div class="flex items-center gap-1.5 flex-wrap">
+                                            <span class="font-bold text-slate-900 text-xs sm:text-sm truncate max-w-[160px]" x-text="c.name"></span>
+                                            <template x-if="c.isVIP">
+                                                <span class="px-1.5 py-0.2 rounded text-[8px] font-mono font-black uppercase bg-amber-100 text-amber-900 border border-amber-300">VIP</span>
+                                            </template>
+                                            <template x-if="c.isDueService">
+                                                <span class="px-1.5 py-0.2 rounded text-[8px] font-mono font-black uppercase bg-teal-100 text-teal-900 border border-teal-300 animate-pulse">SERVIS!</span>
+                                            </template>
+                                        </div>
+                                        <span class="text-[10px] text-slate-400 font-mono block mt-0.5" x-text="'Channel: ' + c.channels.join(', ')"></span>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- Kolom 2: WhatsApp -->
+                            <td class="py-3.5 px-5 sm:px-6 whitespace-nowrap">
+                                <a :href="'https://wa.me/' + c.phoneClean" target="_blank" 
+                                   class="text-emerald-700 hover:text-emerald-900 font-mono font-bold inline-flex items-center gap-1.5 transition">
+                                    <i class="fa-brands fa-whatsapp text-emerald-600 text-sm"></i>
+                                    <span x-text="c.phoneDisplay"></span>
+                                </a>
+                            </td>
+
+                            <!-- Kolom 3: Barang yg Pernah Dibeli -->
+                            <td class="py-3.5 px-5 sm:px-6 max-w-xs">
+                                <div class="flex flex-wrap gap-1 mb-1">
+                                    <template x-for="cat in c.topCategories.slice(0,2)" :key="cat">
+                                        <span class="px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-200" x-text="cat"></span>
+                                    </template>
+                                </div>
+                                <span class="line-clamp-1 text-[11px] text-slate-500 italic" x-text="c.itemsHistorySummary || 'Belum ada rincian item'"></span>
+                            </td>
+
+                            <!-- Kolom 4: Frekuensi Transaksi & Unit Barang -->
+                            <td class="py-3.5 px-5 sm:px-6 whitespace-nowrap text-center font-mono">
+                                <span class="font-bold text-slate-900 text-xs sm:text-sm block" x-text="c.totalOrders + 'x Transaksi'"></span>
+                                <span class="text-[10px] text-slate-400 block" x-text="c.totalItemsCount + ' Item/Servis'"></span>
+                            </td>
+
+                            <!-- Kolom 5: LTV & AOV -->
+                            <td class="py-3.5 px-5 sm:px-6 whitespace-nowrap text-right font-mono">
+                                <span class="font-black text-slate-900 text-xs sm:text-sm block" x-text="formatRupiah(c.totalSpent)"></span>
+                                <span class="text-[10px] text-emerald-700 font-semibold block" x-text="'AOV: ' + formatRupiah(c.averageOrderValue)"></span>
+                            </td>
+
+                            <!-- Kolom 6: Recency Waktu Terakhir Aktif -->
+                            <td class="py-3.5 px-5 sm:px-6 whitespace-nowrap font-mono text-xs">
+                                <span class="font-bold block" 
+                                      :class="c.daysAgo <= 30 ? 'text-emerald-800' : (c.daysAgo <= 180 ? 'text-slate-700' : 'text-amber-800')" 
+                                      x-text="c.recencyLabel"></span>
+                                <span class="text-[10px] text-slate-400" x-text="c.lastActiveDate"></span>
+                            </td>
+
+                            <!-- Kolom 7: Tombol Inspeksi 360° -->
+                            <td class="py-3.5 px-5 sm:px-6 text-center whitespace-nowrap">
+                                <button type="button" @click="openCustomer360Modal(c)" 
+                                        class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold text-xs uppercase tracking-wider transition shadow-2xs hover:shadow-sm active:scale-95 inline-flex items-center gap-1.5">
+                                    <i class="fa-solid fa-address-book text-xs"></i>
+                                    <span>Profil 360°</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </template>
+
+                    <!-- State Kosong -->
+                    <template x-if="filteredCrmCustomers.length === 0">
+                        <tr>
+                            <td colspan="7" class="py-16 text-center">
+                                <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl mx-auto mb-2.5 border border-emerald-100">
+                                    <i class="fa-solid fa-user-xmark"></i>
+                                </div>
+                                <p class="font-bold text-slate-800 text-sm">Tidak Ada Pelanggan yang Cocok</p>
+                                <p class="text-xs text-slate-400 mt-0.5">Ubah kata kunci pencarian atau filter segmen Anda.</p>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- 4. MODAL DRAWER: "CUSTOMER 360° INSPECTOR & RELATIONSHIP HUB"             -->
+    <!-- ========================================================================= -->
+    <div x-show="crmDetailModalOpen" class="relative z-[200]" x-cloak>
+        <div x-show="crmDetailModalOpen" x-transition.opacity class="fixed inset-0 bg-emerald-950/45 backdrop-blur-md" @click="crmDetailModalOpen = false"></div>
+        <div class="fixed inset-0 flex items-center justify-center p-3 sm:p-5 z-50 overflow-y-auto select-none">
+            <div x-show="crmDetailModalOpen" x-transition.scale 
+                 class="w-full max-w-4xl bg-gradient-to-b from-[#ffffff] via-[#f7fcf9] to-[#edf7f1] border border-emerald-200/90 rounded-3xl sm:rounded-[36px] overflow-hidden shadow-[0_25px_60px_rgba(16,185,129,0.2)] relative backdrop-blur-2xl flex flex-col my-auto max-h-[92vh]">
+                
+                <!-- Header Drawer Inspeksi -->
+                <div class="p-4 sm:p-6 border-b border-emerald-100 bg-[#f9fdfa] flex justify-between items-center shrink-0">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-base sm:text-lg font-black text-white shadow-sm border border-white/40 shrink-0"
+                             :class="selectedCrmCustomer?.isVIP ? 'bg-gradient-to-br from-amber-400 to-yellow-600' : 'bg-gradient-to-br from-emerald-600 to-teal-700'"
+                             x-text="selectedCrmCustomer?.name.substring(0,2).toUpperCase()"></div>
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <h3 class="text-base sm:text-xl font-serif font-bold text-slate-900 leading-tight truncate" x-text="selectedCrmCustomer?.name"></h3>
+                                <template x-if="selectedCrmCustomer?.isVIP">
+                                    <span class="px-2 py-0.5 rounded-full text-[9px] font-mono font-black uppercase bg-amber-100 text-amber-900 border border-amber-300">👑 SULTAN VIP</span>
+                                </template>
+                            </div>
+                            <p class="text-xs font-mono font-bold text-emerald-800 mt-0.5" x-text="'WhatsApp: ' + selectedCrmCustomer?.phoneDisplay"></p>
+                        </div>
+                    </div>
+                    <button type="button" @click="crmDetailModalOpen = false" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-rose-50 text-slate-400 hover:text-rose-600 flex items-center justify-center text-xs transition">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Body Drawer (Tab Navigasi: Riwayat Belanja vs Koleksi Barang vs WhatsApp Generator) -->
+                <div class="p-4 sm:p-6 overflow-y-auto space-y-4 text-xs text-slate-700 hide-scroll flex-1">
+                    
+                    <!-- 3 Kartu Ringkasan Metrik Konsumen -->
+                    <div class="grid grid-cols-3 gap-2.5 sm:gap-4 p-3 rounded-2xl bg-white border border-emerald-100 shadow-2xs text-center">
+                        <div>
+                            <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold block">Lifetime Spend (LTV)</span>
+                            <span class="text-xs sm:text-sm font-black font-mono text-emerald-800" x-text="formatRupiah(selectedCrmCustomer?.totalSpent)"></span>
+                        </div>
+                        <div>
+                            <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold block">Frekuensi Order</span>
+                            <span class="text-xs sm:text-sm font-black font-mono text-slate-900" x-text="(selectedCrmCustomer?.totalOrders || 0) + ' Kali'"></span>
+                        </div>
+                        <div>
+                            <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold block">Rata-Rata Keranjang (AOV)</span>
+                            <span class="text-xs sm:text-sm font-black font-mono text-teal-800" x-text="formatRupiah(selectedCrmCustomer?.averageOrderValue)"></span>
+                        </div>
+                    </div>
+
+                    <!-- Siklus Alarm Perawatan Kacamata & Jam Tangan -->
+                    <div x-show="selectedCrmCustomer?.hasOpticalItems || selectedCrmCustomer?.hasWatchItems" class="p-3.5 rounded-2xl bg-[#f8fcf9] border border-emerald-200/90 space-y-2">
+                        <span class="text-[10px] uppercase font-extrabold tracking-wider text-emerald-900 flex items-center gap-1.5">
+                            <i class="fa-solid fa-wand-magic-sparkles text-emerald-600"></i> Siklus Perawatan Berkala (Service Lifecycle)
+                        </span>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+                            <!-- Status Lensa -->
+                            <div x-show="selectedCrmCustomer?.hasOpticalItems" class="p-2.5 rounded-xl bg-white border border-emerald-100">
+                                <span class="font-bold text-slate-800 block">👓 Siklus Lensa Kacamata (1 Tahun):</span>
+                                <span class="text-slate-600" x-text="selectedCrmCustomer?.opticalLifecycleStatus"></span>
+                            </div>
+                            <!-- Status Baterai Jam -->
+                            <div x-show="selectedCrmCustomer?.hasWatchItems" class="p-2.5 rounded-xl bg-white border border-emerald-100">
+                                <span class="font-bold text-slate-800 block">⌚ Siklus Baterai Arloji (2 Tahun):</span>
+                                <span class="text-slate-600" x-text="selectedCrmCustomer?.watchLifecycleStatus"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 1-Click WhatsApp Personal Care Generator -->
+                    <div class="p-4 rounded-2xl bg-emerald-50/80 border border-emerald-200 space-y-2.5">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10.5px] font-extrabold uppercase tracking-wider text-emerald-900 flex items-center gap-1.5">
+                                <i class="fa-brands fa-whatsapp text-emerald-600 text-sm"></i> 1-Click Sapaan WhatsApp Personal
+                            </span>
+                            <span class="text-[9.5px] font-mono text-emerald-700">Template Cerdas Auto-Fill</span>
+                        </div>
+
+                        <!-- Tombol Pilihan Skenario Chat -->
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+                            <button type="button" @click="generateCrmWaTemplate('kacamata')" class="py-1.5 px-2 rounded-xl bg-white hover:bg-emerald-100 text-emerald-900 border border-emerald-200 font-bold text-[10px] uppercase transition text-center">
+                                👓 Follow-up Kacamata
+                            </button>
+                            <button type="button" @click="generateCrmWaTemplate('jam')" class="py-1.5 px-2 rounded-xl bg-white hover:bg-emerald-100 text-emerald-900 border border-emerald-200 font-bold text-[10px] uppercase transition text-center">
+                                ⌚ Follow-up Baterai Jam
+                            </button>
+                            <button type="button" @click="generateCrmWaTemplate('vip')" class="py-1.5 px-2 rounded-xl bg-white hover:bg-emerald-100 text-emerald-900 border border-emerald-200 font-bold text-[10px] uppercase transition text-center">
+                                👑 Voucher Apresiasi VIP
+                            </button>
+                        </div>
+
+                        <!-- Teks Pesan Yang Disiapkan -->
+                        <textarea x-model="crmGeneratedWaText" rows="3" 
+                                  class="w-full bg-white border border-emerald-200 rounded-xl p-2.5 text-xs text-slate-800 font-mono focus:outline-none focus:border-emerald-500 shadow-2xs resize-none"></textarea>
+
+                        <div class="flex justify-end">
+                            <button type="button" @click="sendCrmWaDirect()" 
+                                    class="px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold text-xs uppercase tracking-wider transition shadow-2xs flex items-center gap-1.5 active:scale-95">
+                                <i class="fa-brands fa-whatsapp text-sm"></i>
+                                <span>Kirim Pesan ke WhatsApp</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Lemari Riwayat Barang & Servis Lengkap -->
+                    <div class="space-y-2">
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-700 block">
+                            Lemari Barang &amp; Jasa Servis yang Pernah Dibeli:
+                        </span>
+                        
+                        <div class="space-y-2 max-h-52 overflow-y-auto hide-scroll">
+                            <template x-for="(hist, idx) in selectedCrmCustomer?.purchaseTimeline" :key="idx">
+                                <div class="p-3 rounded-2xl bg-white border border-emerald-100 shadow-2xs flex items-start justify-between gap-2">
+                                    <div class="space-y-0.5">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-900 text-xs" x-text="hist.idTransaksi"></span>
+                                            <span class="px-2 py-0.2 rounded text-[8.5px] font-bold uppercase tracking-wider"
+                                                  :class="hist.channel === 'POS' ? 'bg-emerald-100 text-emerald-800' : (hist.channel === 'Custom' ? 'bg-teal-100 text-teal-800' : 'bg-sky-100 text-sky-800')"
+                                                  x-text="hist.channel"></span>
+                                            <span class="text-[10px] text-slate-400 font-mono" x-text="hist.tanggal"></span>
+                                        </div>
+                                        <p class="text-xs text-slate-800 font-semibold leading-relaxed" x-text="hist.itemsText"></p>
+                                    </div>
+                                    <span class="font-black font-mono text-emerald-800 text-xs shrink-0" x-text="formatRupiah(hist.nominal)"></span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Footer Drawer -->
+                <div class="p-3.5 sm:p-4 border-t border-emerald-100 bg-[#f9fdfa] flex justify-end shrink-0">
+                    <button type="button" @click="crmDetailModalOpen = false" class="px-6 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider rounded-xl transition">
+                        Tutup Profil
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
             <!-- TAB 2: MANAJEMEN PESANAN -->
             <!-- ========================================================================= -->
             <!-- TAB 2: MANAJEMEN PESANAN (LUMINOUS MINT LUXURY ORDER MANAGEMENT)          -->
@@ -14117,6 +14515,281 @@ _Uang fisik di laci telah dihitung dan diserahterimakan untuk shift kasir beriku
                     window.location.href = `${SCRIPT_URL}?action=export_audit_logs_csv`;
                     this.recordAuditAction('EXPORT', 'Audit System', 'Admin mengekspor berkas audit log ke CSV');
                 },
+                // =========================================================================
+        // STATE & LOGIKA: CRM 360° & IN-MEMORY CUSTOMER LIFETIME VALUE ENGINE
+        // =========================================================================
+        crmSearchQuery: '',
+        crmSegmentFilter: 'Semua',
+        crmSortBy: 'recency', // 'recency' | 'monetary-desc' | 'frequency-desc' | 'name-asc'
+        crmDetailModalOpen: false,
+        selectedCrmCustomer: null,
+        crmGeneratedWaText: '',
+
+        // 1. ENGINE AGREGATOR IDENTITAS TUNGGAL KONSUMEN (0.02 DETIK IN-MEMORY)
+        get crmCustomers() {
+            const customerMap = {};
+            const nowTime = Date.now();
+
+            // A. AGREGASI DARI SHEET ORDERS (REGULER WEB + POS KASIR TOKO)
+            (this.orders || []).forEach(o => {
+                const phone = this.formatWANumber(o.customerPhone);
+                const name = String(o.customerName || 'Pelanggan').trim();
+                const key = (phone && phone !== '6281312831690') ? phone : ('NAME-' + name.toLowerCase());
+
+                if (!customerMap[key]) {
+                    customerMap[key] = {
+                        customerKey: key,
+                        name: name,
+                        phoneClean: phone,
+                        phoneDisplay: o.customerPhone || '-',
+                        totalSpent: 0,
+                        totalOrders: 0,
+                        totalItemsCount: 0,
+                        channels: new Set(),
+                        categoriesMap: {},
+                        itemsListRaw: [],
+                        purchaseTimeline: [],
+                        lastActiveTimestamp: 0,
+                        lastActiveDate: '-',
+                        hasOpticalItems: false,
+                        hasWatchItems: false
+                    };
+                }
+
+                const c = customerMap[key];
+                if (c.name === 'Pelanggan Walk-In Toko' && name !== 'Pelanggan Walk-In Toko') {
+                    c.name = name; // Update nama jika ada nama lebih spesifik
+                }
+
+                const totalVal = Number(o.total) || 0;
+                c.totalSpent += totalVal;
+                c.totalOrders += 1;
+
+                // Tentukan channel
+                const isPos = String(o.idTransaksi || '').startsWith('POS-');
+                c.channels.add(isPos ? 'POS Kasir' : 'Web Toko');
+
+                // Timestamp aktivitas
+                const txDateObj = parseAnyDate(o.transactionDate);
+                const timeMs = !isNaN(txDateObj.getTime()) ? txDateObj.getTime() : 0;
+                if (timeMs > c.lastActiveTimestamp) {
+                    c.lastActiveTimestamp = timeMs;
+                    c.lastActiveDate = o.transactionDate || '-';
+                }
+
+                // Parsing rincian barang
+                const rawItems = String(o.itemsList || '');
+                c.purchaseTimeline.push({
+                    idTransaksi: o.idTransaksi,
+                    channel: isPos ? 'POS' : 'Web',
+                    tanggal: o.transactionDate || '-',
+                    itemsText: rawItems.split('\n')[0] || 'Transaksi Toko',
+                    nominal: totalVal
+                });
+
+                // Deteksi item kacamata / jam
+                const lower = rawItems.toLowerCase();
+                if (lower.includes('kacamata') || lower.includes('lensa') || lower.includes('frame')) {
+                    c.hasOpticalItems = true;
+                    c.categoriesMap['Kacamata'] = (c.categoriesMap['Kacamata'] || 0) + 1;
+                }
+                if (lower.includes('jam') || lower.includes('baterai') || lower.includes('strap')) {
+                    c.hasWatchItems = true;
+                    c.categoriesMap['Jam Tangan'] = (c.categoriesMap['Jam Tangan'] || 0) + 1;
+                }
+                if (lower.includes('jas hujan')) {
+                    c.categoriesMap['Jas Hujan'] = (c.categoriesMap['Jas Hujan'] || 0) + 1;
+                }
+                if (lower.includes('pulsa')) {
+                    c.categoriesMap['Pulsa'] = (c.categoriesMap['Pulsa'] || 0) + 1;
+                }
+
+                c.totalItemsCount += (rawItems.match(/\(\d+x\)/g) || [1]).length;
+            });
+
+            // B. AGREGASI DARI SHEET CUSTOM ORDERS (TIKET SERVIS & CUSTOM)
+            (this.adminCustomOrders || []).forEach(co => {
+                const phone = this.formatWANumber(co.customerPhone);
+                const name = String(co.customerName || 'Pelanggan Servis').trim();
+                const key = (phone && phone !== '6281312831690') ? phone : ('NAME-' + name.toLowerCase());
+
+                if (!customerMap[key]) {
+                    customerMap[key] = {
+                        customerKey: key,
+                        name: name,
+                        phoneClean: phone,
+                        phoneDisplay: co.customerPhone || '-',
+                        totalSpent: 0,
+                        totalOrders: 0,
+                        totalItemsCount: 0,
+                        channels: new Set(),
+                        categoriesMap: {},
+                        itemsListRaw: [],
+                        purchaseTimeline: [],
+                        lastActiveTimestamp: 0,
+                        lastActiveDate: '-',
+                        hasOpticalItems: false,
+                        hasWatchItems: false
+                    };
+                }
+
+                const c = customerMap[key];
+                c.channels.add('Custom/Servis');
+
+                const harga = Number(co.harga) || 0;
+                c.totalSpent += harga;
+                c.totalOrders += 1;
+                c.totalItemsCount += 1;
+
+                const txDateObj = parseAnyDate(co.tanggal);
+                const timeMs = !isNaN(txDateObj.getTime()) ? txDateObj.getTime() : 0;
+                if (timeMs > c.lastActiveTimestamp) {
+                    c.lastActiveTimestamp = timeMs;
+                    c.lastActiveDate = co.tanggal || '-';
+                }
+
+                c.purchaseTimeline.push({
+                    idTransaksi: co.idCustom,
+                    channel: 'Custom',
+                    tanggal: co.tanggal || '-',
+                    itemsText: `[${co.kategori}] ${co.kebutuhan}`,
+                    nominal: harga
+                });
+
+                const catLower = String(co.kategori || '').toLowerCase();
+                if (catLower.includes('kacamata') || catLower.includes('lensa')) {
+                    c.hasOpticalItems = true;
+                    c.categoriesMap['Kacamata'] = (c.categoriesMap['Kacamata'] || 0) + 1;
+                } else if (catLower.includes('jam')) {
+                    c.hasWatchItems = true;
+                    c.categoriesMap['Jam Tangan'] = (c.categoriesMap['Jam Tangan'] || 0) + 1;
+                }
+            });
+
+            // C. FINALISASI DATA PROFILE, RFM, & LIFECYCLE STATUS
+            return Object.values(customerMap).map(c => {
+                c.channels = Array.from(c.channels);
+                const daysAgo = c.lastActiveTimestamp > 0 
+                    ? Math.max(0, Math.floor((nowTime - c.lastActiveTimestamp) / (1000 * 60 * 60 * 24)))
+                    : 999;
+                
+                c.daysAgo = daysAgo;
+                c.recencyLabel = daysAgo === 0 ? 'Hari Ini' : (daysAgo === 1 ? 'Kemarin' : `${daysAgo} Hari Lalu`);
+
+                c.isVIP = c.totalSpent >= 1500000 || c.totalOrders >= 5;
+                c.averageOrderValue = c.totalOrders > 0 ? Math.round(c.totalSpent / c.totalOrders) : 0;
+
+                // Lifecycle status
+                c.isDueService = (c.hasOpticalItems && daysAgo >= 365) || (c.hasWatchItems && daysAgo >= 700);
+
+                if (c.hasOpticalItems) {
+                    c.opticalLifecycleStatus = daysAgo >= 365 
+                        ? `Sudah ${daysAgo} hari sejak pembuatan kacamata terakhir. Waktunya periksa ulang visus mata.`
+                        : `Kondisi lensa terpantau optimal (${daysAgo} hari pemakaian).`;
+                }
+                if (c.hasWatchItems) {
+                    c.watchLifecycleStatus = daysAgo >= 700 
+                        ? `Sudah ${daysAgo} hari sejak servis/baterai terakhir. Disarankan cek daya baterai agar tidak bocor.`
+                        : `Baterai arloji terpantau aman (${daysAgo} hari).`;
+                }
+
+                // Kategori favorit
+                c.topCategories = Object.keys(c.categoriesMap).sort((a,b) => c.categoriesMap[b] - c.categoriesMap[a]);
+                if (c.topCategories.length === 0) c.topCategories = ['Ritel Umum'];
+
+                // Ringkasan item
+                c.itemsHistorySummary = c.purchaseTimeline.map(t => t.itemsText).join(', ');
+
+                return c;
+            });
+        },
+
+        // 2. FILTER & PENGURUTAN REAKTIF (INSTAN < 1 DETIK)
+        get filteredCrmCustomers() {
+            let list = this.crmCustomers || [];
+
+            // A. Filter Segmen
+            if (this.crmSegmentFilter === 'VIP') {
+                list = list.filter(c => c.isVIP);
+            } else if (this.crmSegmentFilter === 'Optik') {
+                list = list.filter(c => c.hasOpticalItems);
+            } else if (this.crmSegmentFilter === 'Horology') {
+                list = list.filter(c => c.hasWatchItems);
+            } else if (this.crmSegmentFilter === 'Baru') {
+                list = list.filter(c => c.daysAgo <= 30 && c.totalOrders <= 2);
+            } else if (this.crmSegmentFilter === 'Dorman') {
+                list = list.filter(c => c.daysAgo >= 180);
+            } else if (this.crmSegmentFilter === 'DueService') {
+                list = list.filter(c => c.isDueService);
+            }
+
+            // B. Filter Pencarian Teks
+            if (this.crmSearchQuery.trim() !== '') {
+                const q = this.crmSearchQuery.toLowerCase().trim();
+                list = list.filter(c => 
+                    c.name.toLowerCase().includes(q) ||
+                    c.phoneClean.includes(q) ||
+                    c.phoneDisplay.includes(q) ||
+                    c.itemsHistorySummary.toLowerCase().includes(q)
+                );
+            }
+
+            // C. Pengurutan
+            if (this.crmSortBy === 'recency') {
+                list.sort((a, b) => b.lastActiveTimestamp - a.lastActiveTimestamp);
+            } else if (this.crmSortBy === 'monetary-desc') {
+                list.sort((a, b) => b.totalSpent - a.totalSpent);
+            } else if (this.crmSortBy === 'frequency-desc') {
+                list.sort((a, b) => b.totalOrders - a.totalOrders);
+            } else if (this.crmSortBy === 'name-asc') {
+                list.sort((a, b) => a.name.localeCompare(b.name));
+            }
+
+            return list;
+        },
+
+        // 3. METRIK PERHITUNGAN KILAT BENTO CARDS
+        get crmCountVIP() {
+            return (this.crmCustomers || []).filter(c => c.isVIP).length;
+        },
+        get crmCountDueService() {
+            return (this.crmCustomers || []).filter(c => c.isDueService).length;
+        },
+        get crmCountActive90Days() {
+            return (this.crmCustomers || []).filter(c => c.daysAgo <= 90).length;
+        },
+
+        // 4. BUKA MODAL INSPEKSI PROFIL 360°
+        openCustomer360Modal(customer) {
+            this.selectedCrmCustomer = customer;
+            this.generateCrmWaTemplate(customer.hasOpticalItems ? 'kacamata' : (customer.hasWatchItems ? 'jam' : 'vip'));
+            this.crmDetailModalOpen = true;
+
+            // Catat ke Audit Log secara non-blocking
+            this.recordAuditAction('ACCESS', 'CRM Pelanggan', `Admin memeriksa profil CRM 360° untuk "${customer.name}" (${customer.phoneDisplay})`);
+        },
+
+        // 5. GENERATOR TEMPLATE WHATSAPP PERSONAL
+        generateCrmWaTemplate(scenario) {
+            if (!this.selectedCrmCustomer) return;
+            const name = this.selectedCrmCustomer.name;
+            const topItem = this.selectedCrmCustomer.purchaseTimeline[0]?.itemsText || 'produk toko';
+
+            if (scenario === 'kacamata') {
+                this.crmGeneratedWaText = `Halo Bapak/Ibu ${name}, salam hangat dari Toko Putra Barokah Bojonegoro. Sudah cukup lama sejak pembuatan kacamata (${topItem}) terakhir. Apakah kenyamanan fokus lensa masih optimal? Silakan mampir ke toko bila ingin sekadar periksa minus ulang atau cuci kacamata gratis dari teknisi kami. Terima kasih!`;
+            } else if (scenario === 'jam') {
+                this.crmGeneratedWaText = `Halo Kak ${name}, salam dari Putra Barokah Store. Mengingat jam tangan arloji (${topItem}) sudah cukup lama diservis/diganti baterai, kami menyarankan pengecekan daya berkala agar mesin tetap akurat dan baterai tidak bocor. Dapatkan promo cek mesin gratis minggu ini di ruko kami. Terima kasih!`;
+            } else if (scenario === 'vip') {
+                this.crmGeneratedWaText = `Yth. Bapak/Ibu ${name}, terima kasih atas loyalitas Anda sebagai pelanggan istimewa Toko Putra Barokah. Khusus bulan ini, kami menyiapkan voucher potongan spesial untuk koleksi kacamata baru atau servis jam tangan keluarga. Ditunggu kunjungan Anda berikutnya!`;
+            }
+        },
+
+        sendCrmWaDirect() {
+            if (!this.selectedCrmCustomer) return;
+            const phone = this.selectedCrmCustomer.phoneClean;
+            const text = encodeURIComponent(this.crmGeneratedWaText);
+            window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+        },
 
                 // --- 5. ENTRY BUKU PANDUAN INTERAKTIF DI DALAM guideDirectory ---
                 // Sisipkan 'customer_analysis' ke dalam objek guideDirectory: { ... } di admin.html:
@@ -14472,6 +15145,32 @@ _Uang fisik di laci telah dihitung dan diserahterimakan untuk shift kasir beriku
                         proTip: 'Setelah pengadaan barang fisik berstatus "Selesai", jangan lupa memasukkan jumlah barang yang masuk ke fitur "Manajemen Stok" agar persediaan cadangan gudang toko otomatis bertambah.',
                         warning: 'Pastikan nomor WhatsApp supplier diawali dengan format nomor yang benar (contoh: 0812... atau 62812...) agar tautan chat langsung terhubung dengan lancar.'
                     },
+                    crm_analytics: {
+        shortLabel: 'CRM 360°',
+        icon: 'fa-solid fa-address-card',
+        title: 'Panduan Eksekutif: CRM 360° & Analisis Loyalitas Pelanggan',
+        summary: 'Pusat data relasi konsumen terpadu yang menggabungkan pembeli website, kasir POS toko fisik, dan pelanggan servis custom menjadi profil tunggal dengan perhitungan RFM otomatis dan alarm pengingat perawatan kacamata/jam berkala.',
+        steps: [
+            {
+                heading: '1. Agregasi Otomatis (Zero-Latency Calculation)',
+                detail: 'Sistem CRM tidak membutuhkan download berulang ke database. Data dirangkum secara instan di memori peramban dengan mencocokkan nomor WhatsApp pelanggan.'
+            },
+            {
+                heading: '2. Membaca Metrik RFM & Status Segmen',
+                detail: 'Amati Recency (kapan terakhir beli), Frequency (berapa kali belanja & servis), serta Monetary/LTV (total nilai uang yang pernah dibelanjakan pelanggan di Putra Barokah).'
+            },
+            {
+                heading: '3. Memantau Alarm Siklus Perawatan (Optical & Watch Care)',
+                detail: 'Konsumen kacamata yang sudah lewat 1 tahun ditandai lencana SERVIS untuk ditawari periksa mata ulang, sementara konsumen jam tangan yang mendekati 2 tahun diingatkan untuk cek baterai.'
+            },
+            {
+                heading: '4. Sapaan WhatsApp Personal 1-Klik',
+                detail: 'Klik tombol "Profil 360°", pilih template sapaan (Follow-up Kacamata, Baterai Jam, atau Voucher VIP), lalu tekan "Kirim Pesan ke WhatsApp" untuk langsung menyapa pelanggan tanpa perlu mengetik ulang.'
+            }
+        ],
+        proTip: 'Gunakan kolom pencarian barang (misal ketik "Renata" atau "Photochromic") untuk menemukan siapa saja pelanggan yang pernah membeli tipe suku cadang tersebut ketika Anda ingin menawarkan promo restock baru.',
+        warning: 'Nomor WhatsApp pelanggan otomatis dinormalisasi ke awalan 62. Pastikan nomor kontak diisi dengan nomor aktif saat input pesanan agar profil konsumen terhubung sempurna.'
+    },
 
                     // =========================================================================
                     // PANDUAN LENGKAP: SALES RECEIPT CENTER (TAMBAHKAN KE guideDirectory)
@@ -14983,6 +15682,7 @@ _Uang fisik di laci telah dihitung dan diserahterimakan untuk shift kasir beriku
                 getTabTitle() {
                     if (this.currentTab === 'customer_analysis') return 'Customer Conversion Funnel';
                     if (this.currentTab === 'shift_management') return 'Cash Drawer & Shift Settlement';
+                    if (this.currentTab === 'crm_analytics') return 'Customer Relationship Management (CRM 360°)';
                     const titles = {
                         'dashboard': 'Control Center Analytics',
                         'orders': 'Live Order Management',
