@@ -443,6 +443,25 @@
         CRM
     </span>
 </button>
+            <!-- TOMBOL MENU: FINANCIAL PROFIT TICKER (DESKTOP) -->
+<button @click="switchTab('profit_ticker')" 
+        type="button"
+        :class="currentTab === 'profit_ticker' 
+            ? 'bg-gradient-to-r from-emerald-600 via-teal-700 to-emerald-800 text-white font-bold shadow-[0_8px_20px_rgba(5,150,105,0.32)] border-emerald-500/20 translate-x-1' 
+            : 'text-slate-600 hover:text-emerald-900 hover:bg-emerald-50/80 border-transparent hover:border-emerald-100/90 font-medium'" 
+        class="w-full flex items-center justify-between px-3.5 py-3 rounded-2xl border transition-all duration-200 text-xs tracking-wide group text-left cursor-pointer">
+    <div class="flex items-center gap-3">
+        <span class="w-8 h-8 rounded-xl flex items-center justify-center text-sm transition-all"
+              :class="currentTab === 'profit_ticker' ? 'bg-white/15 text-white' : 'bg-emerald-50 text-emerald-700 group-hover:scale-110'">
+            <i class="fa-solid fa-arrow-trend-up"></i>
+        </span>
+        <span class="font-bold">Grafik Profit Live</span>
+    </div>
+    <span class="px-2 py-0.5 rounded-md text-[8.5px] font-mono font-black uppercase tracking-wider"
+          :class="currentTab === 'profit_ticker' ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-800'">
+        PROFIT
+    </span>
+</button>
 
             <!-- 2. Manajemen Pesanan -->
             <button @click="switchTab('orders')"
@@ -969,6 +988,23 @@
                             SHIFT
                         </span>
                     </button>
+                    <!-- TOMBOL MENU: FINANCIAL PROFIT TICKER (MOBILE DRAWER) -->
+<button @click="switchTab('profit_ticker'); mobileSidebarOpen = false" 
+        type="button"
+        :class="currentTab === 'profit_ticker' ? 'bg-gradient-to-r from-emerald-600 via-teal-700 to-emerald-800 text-white font-bold shadow-[0_8px_20px_rgba(5,150,105,0.32)] border-emerald-500/20 translate-x-1' : 'text-slate-600 hover:text-emerald-900 hover:bg-emerald-50/80 border-transparent font-medium'" 
+        class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl border transition-all text-xs tracking-wide text-left cursor-pointer">
+    <div class="flex items-center gap-3">
+        <span class="w-7 h-7 rounded-xl flex items-center justify-center text-xs transition-all" 
+              :class="currentTab === 'profit_ticker' ? 'bg-white/15 text-white' : 'bg-emerald-50 text-emerald-700'">
+            <i class="fa-solid fa-arrow-trend-up"></i>
+        </span>
+        <span class="font-bold">Grafik Profit Live</span>
+    </div>
+    <span class="px-1.5 py-0.5 rounded text-[8px] font-mono font-bold tracking-wider" 
+          :class="currentTab === 'profit_ticker' ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-800'">
+        PROFIT
+    </span>
+</button>
 
 
                     <!-- 2. Manajemen Pesanan -->
@@ -2109,6 +2145,189 @@
                 <div id="src-print-portal" class="hidden"></div>
 
             </div>
+            <!-- ========================================================================= -->
+<!-- TAB: FINANCIAL PROFIT TICKER & TIME-SERIES ENGINE (PUTRA BAROKAH)         -->
+<!-- TEMA: LUMINOUS MINT LUXURY (TRADING DESK PURE NET PROFIT STAGE)           -->
+<!-- ========================================================================= -->
+<div x-show="currentTab === 'profit_ticker' && !isLoadingData" x-cloak x-transition.opacity class="space-y-6 select-none text-left">
+    
+    <!-- 1. EXECUTIVE PROFIT TICKER HEADER: LIVE FINANCIAL COCKPIT -->
+    <div class="bg-gradient-to-br from-white via-[#f7fcf9] to-[#edf7f1] rounded-3xl sm:rounded-[36px] border border-emerald-200/90 p-5 sm:p-7 shadow-[0_15px_45px_rgba(16,185,129,0.08)] backdrop-blur-2xl relative overflow-hidden">
+        
+        <!-- Ambient Light Halo Background -->
+        <div class="absolute -right-16 -top-16 w-56 h-56 rounded-full blur-3xl pointer-events-none"
+             :class="profitMetrics.isBullish ? 'bg-emerald-200/40' : 'bg-rose-200/40'"></div>
+
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5 relative z-10">
+            
+            <!-- Sisi Kiri: Angka Profit Utama & Ticker Tuntunan Pasar -->
+            <div class="space-y-2">
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="px-3 py-1 rounded-full text-[9.5px] font-mono font-black uppercase tracking-widest bg-emerald-100/90 text-emerald-900 border border-emerald-300 shadow-2xs">
+                        ● Live Net Profit Engine
+                    </span>
+                    <span class="text-[11px] text-slate-500 font-mono">
+                        Rentang: <strong class="text-slate-900 font-bold" x-text="profitTimeframeLabel"></strong>
+                    </span>
+                </div>
+
+                <div class="flex items-baseline gap-3 flex-wrap">
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black font-mono tracking-tight"
+                        :class="profitMetrics.netProfitTotal >= 0 ? 'text-slate-900' : 'text-rose-600'"
+                        x-text="formatRupiah(profitMetrics.netProfitTotal)"></h2>
+
+                    <!-- Badge Pertumbuhan Tren (Growth %) -->
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-2xl border text-xs font-mono font-extrabold shadow-2xs"
+                         :class="profitMetrics.isBullish ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : 'bg-rose-50 text-rose-700 border-rose-200'">
+                        <i class="fa-solid" :class="profitMetrics.isBullish ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down'"></i>
+                        <span x-text="(profitMetrics.growthRate >= 0 ? '+' : '') + profitMetrics.growthRate + '%'"></span>
+                        <span class="text-[9.5px] font-sans font-bold uppercase opacity-80" x-text="profitMetrics.isBullish ? 'Surplus' : 'Defisit'"></span>
+                    </div>
+                </div>
+
+                <p class="text-xs text-slate-500 max-w-xl leading-relaxed">
+                    Menghitung akumulasi laba bersih riil dari pesanan selesai (Web &amp; Kasir POS) serta jasa servis kacamata/arloji dikurangi beban operasional kasir.
+                </p>
+            </div>
+
+            <!-- Sisi Kanan: Timeframe Capsule Control (1D, 1W, 1M, YTD) & Fullscreen Trigger -->
+            <div class="flex flex-wrap items-center gap-2.5 self-start lg:self-center shrink-0">
+                <!-- Timeframe Selector Segmented Bar -->
+                <div class="inline-flex items-center p-1.5 rounded-2xl bg-white border border-emerald-200/90 shadow-2xs gap-1">
+                    <button type="button" @click="setProfitTimeframe('1D')"
+                            :class="profitTimeframe === '1D' ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-black shadow-xs' : 'text-slate-600 hover:text-emerald-800 font-bold'"
+                            class="px-3.5 py-2 rounded-xl text-xs font-mono transition-all active:scale-95">1D</button>
+
+                    <button type="button" @click="setProfitTimeframe('1W')"
+                            :class="profitTimeframe === '1W' ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-black shadow-xs' : 'text-slate-600 hover:text-emerald-800 font-bold'"
+                            class="px-3.5 py-2 rounded-xl text-xs font-mono transition-all active:scale-95">1W</button>
+
+                    <button type="button" @click="setProfitTimeframe('1M')"
+                            :class="profitTimeframe === '1M' ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-black shadow-xs' : 'text-slate-600 hover:text-emerald-800 font-bold'"
+                            class="px-3.5 py-2 rounded-xl text-xs font-mono transition-all active:scale-95">1M</button>
+
+                    <button type="button" @click="setProfitTimeframe('YTD')"
+                            :class="profitTimeframe === 'YTD' ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-black shadow-xs' : 'text-slate-600 hover:text-emerald-800 font-bold'"
+                            class="px-3.5 py-2 rounded-xl text-xs font-mono transition-all active:scale-95">YTD</button>
+                </div>
+
+                <!-- Tombol Full View Mode -->
+                <button type="button" @click="profitFullScreen = true" 
+                        class="w-10 h-10 rounded-2xl bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 border border-emerald-200/90 flex items-center justify-center transition shadow-2xs active:scale-95" 
+                        title="Perbesar Layar Penuh (Cinema Stage)">
+                    <i class="fa-solid fa-expand text-xs"></i>
+                </button>
+
+                <!-- Tombol Ekspor CSV Profit -->
+                <button type="button" @click="exportProfitCSV()" 
+                        class="w-10 h-10 rounded-2xl bg-white hover:bg-emerald-50 text-emerald-700 border border-emerald-200/90 flex items-center justify-center transition shadow-2xs active:scale-95" 
+                        title="Unduh Rekap Profit CSV">
+                    <i class="fa-solid fa-cloud-arrow-down text-xs"></i>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- 2. MINI TICKER BENTO RIBBON (HIGH, LOW, AVERAGE, & COUNT) -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3.5 pt-5 mt-5 border-t border-emerald-100 text-xs">
+            <div class="bg-white/80 rounded-2xl border border-emerald-100/90 p-3 shadow-2xs">
+                <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold block mb-0.5">Puncak Profit (High)</span>
+                <span class="font-black font-mono text-emerald-800 text-xs sm:text-sm" x-text="formatRupiah(profitMetrics.high)"></span>
+            </div>
+
+            <div class="bg-white/80 rounded-2xl border border-emerald-100/90 p-3 shadow-2xs">
+                <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold block mb-0.5">Titik Dasar (Low)</span>
+                <span class="font-black font-mono text-xs sm:text-sm"
+                      :class="profitMetrics.low >= 0 ? 'text-slate-800' : 'text-rose-600'" 
+                      x-text="formatRupiah(profitMetrics.low)"></span>
+            </div>
+
+            <div class="bg-white/80 rounded-2xl border border-emerald-100/90 p-3 shadow-2xs">
+                <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold block mb-0.5">Rata-Rata / Titik (Avg)</span>
+                <span class="font-black font-mono text-teal-800 text-xs sm:text-sm" x-text="formatRupiah(profitMetrics.average)"></span>
+            </div>
+
+            <div class="bg-white/80 rounded-2xl border border-emerald-100/90 p-3 shadow-2xs">
+                <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold block mb-0.5">Kondisi Neraca</span>
+                <span class="font-extrabold text-xs inline-flex items-center gap-1.5"
+                      :class="profitMetrics.isBullish ? 'text-emerald-700' : 'text-rose-600'">
+                    <span class="w-2 h-2 rounded-full" :class="profitMetrics.isBullish ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'"></span>
+                    <span x-text="profitMetrics.isBullish ? 'Surplus Operasional' : 'Perlu Evaluasi Beban'"></span>
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 3. TRADING STAGE: THE INTERACTIVE AREA CHART CANVAS -->
+    <div class="bg-white/95 rounded-3xl sm:rounded-[36px] border border-emerald-100/90 p-5 sm:p-7 shadow-[0_15px_40px_rgba(16,185,129,0.06)] backdrop-blur-xl relative">
+        <div class="flex items-center justify-between border-b border-emerald-100 pb-3.5 mb-5">
+            <div class="flex items-center gap-2.5">
+                <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-100 flex items-center justify-center text-xs shadow-2xs">
+                    <i class="fa-solid fa-chart-area"></i>
+                </span>
+                <div>
+                    <h4 class="text-xs sm:text-sm font-bold text-slate-900 uppercase tracking-wider">
+                        Kurva Fluktuasi Laba Bersih
+                    </h4>
+                    <p class="text-[10px] text-slate-400 font-mono">Formula: (Omset Selesai &minus; HPP Modal) &minus; Kas Beban Keluar</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <span class="px-2.5 py-1 rounded-full text-[9px] font-mono font-bold uppercase tracking-wider"
+                      :class="profitMetrics.isBullish ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200'">
+                    <span x-text="profitMetrics.isBullish ? 'Trend: Uptrend' : 'Trend: Pullback'"></span>
+                </span>
+            </div>
+        </div>
+
+        <!-- Canvas Grafik Chart.js -->
+        <div class="relative w-full h-72 sm:h-96 lg:h-[420px]">
+            <canvas id="chartProfitCanvas"></canvas>
+        </div>
+
+        <div class="flex items-center justify-between text-[11px] text-slate-400 pt-3 border-t border-emerald-50 mt-2 font-mono">
+            <span>&bull; Sumbu Y: Net Profit (IDR)</span>
+            <span>Garis Putus-Putus: Garis Impas (Rp 0) &bull;</span>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- 4. MODAL FULLSCREEN CINEMA STAGE (FULL VIEW PROFIT TRADING)               -->
+    <!-- ========================================================================= -->
+    <div x-show="profitFullScreen" class="relative z-[220]" x-cloak>
+        <div x-show="profitFullScreen" x-transition.opacity class="fixed inset-0 bg-emerald-950/60 backdrop-blur-xl" @click="profitFullScreen = false"></div>
+        <div class="fixed inset-0 flex items-center justify-center p-3 sm:p-6 z-50 overflow-hidden select-none">
+            <div x-show="profitFullScreen" x-transition.scale 
+                 class="w-full max-w-7xl h-[92vh] bg-gradient-to-b from-white via-[#f7fcf9] to-[#edf7f1] border border-emerald-200/90 rounded-3xl sm:rounded-[40px] shadow-2xl flex flex-col p-5 sm:p-8">
+                
+                <div class="flex items-center justify-between border-b border-emerald-100 pb-4 shrink-0">
+                    <div>
+                        <span class="text-[10px] font-mono font-black uppercase tracking-widest text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full">
+                            Full-Canvas Trading Stage
+                        </span>
+                        <h3 class="text-xl sm:text-2xl font-serif font-bold text-slate-900 mt-1">Audit Tren Profit Lengkap Toko Putra Barokah</h3>
+                    </div>
+                    <button type="button" @click="profitFullScreen = false" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-rose-50 text-slate-500 hover:text-rose-600 flex items-center justify-center transition">
+                        <i class="fa-solid fa-xmark text-sm"></i>
+                    </button>
+                </div>
+
+                <!-- Canvas Fullscreen -->
+                <div class="relative flex-1 w-full mt-4">
+                    <canvas id="chartProfitCanvasFull"></canvas>
+                </div>
+
+                <div class="p-3 bg-white rounded-2xl border border-emerald-100 flex items-center justify-between text-xs text-slate-600 mt-3 shrink-0">
+                    <span>Gunakan mode ini untuk evaluasi mingguan/bulanan performa keuntungan toko.</span>
+                    <button type="button" @click="profitFullScreen = false" class="px-5 py-2 bg-emerald-600 text-white font-bold text-xs uppercase rounded-xl">Kembali</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
             <!-- ========================================================================= -->
 <!-- TAB: CRM 360° & CUSTOMER LIFETIME VALUE ANALYTICS (PUTRA BAROKAH)         -->
 <!-- TEMA: LUMINOUS MINT LUXURY (IN-MEMORY CLIENT-SIDE RESOLVER)               -->
@@ -11577,6 +11796,337 @@
                     });
                     this.posManualItemModal = false;
                 },
+                // =========================================================================
+        // STATE & TIME-SERIES ENGINE: FINANCIAL PROFIT TICKER (MURNI LABA BERSIH)
+        // =========================================================================
+        profitTimeframe: '1W', // '1D' | '1W' | '1M' | 'YTD'
+        profitFullScreen: false,
+        profitMetrics: {
+            netProfitTotal: 0,
+            growthRate: 0,
+            isBullish: true,
+            high: 0,
+            low: 0,
+            average: 0
+        },
+
+        get profitTimeframeLabel() {
+            const map = {
+                '1D': 'Hari Ini (Intraday Per Jam)',
+                '1W': '7 Hari Terakhir (Harian)',
+                '1M': '30 Hari Terakhir (Harian)',
+                'YTD': 'Tahun Berjalan (Kumulatif Bulanan)'
+            };
+            return map[this.profitTimeframe] || 'Periode Aktif';
+        },
+
+        setProfitTimeframe(tf) {
+            this.profitTimeframe = tf;
+            this.calculateProfitSeries();
+            this.$nextTick(() => {
+                this.renderProfitChart();
+            });
+            // Rekam aktivitas ke Audit Log
+            this.recordAuditAction('ACCESS', 'Profit Ticker', `Admin memeriksa grafik profit timeframe: ${tf}`);
+        },
+
+        // 1. ENGINE KALKULASI LABA BERSIH REAL-TIME (IN-MEMORY TIME-SERIES BUCKET)
+        calculateProfitSeries() {
+            const tf = this.profitTimeframe;
+            const now = new Date();
+            let labels = [];
+            let profitPoints = [];
+
+            // A. PERSIAPAN BUCKET WAKTU
+            if (tf === '1D') {
+                // Timeframe 1D: Per 2 Jam (08:00 s/d 22:00)
+                const hours = [8, 10, 12, 14, 16, 18, 20, 22];
+                labels = hours.map(h => String(h).padStart(2, '0') + ':00');
+                profitPoints = new Array(hours.length).fill(0);
+
+                const todayStr = now.toLocaleDateString('id-ID');
+
+                // 1. Profit dari Orders Selesai Hari Ini
+                (this.orders || []).forEach(o => {
+                    if (o.statusPesanan === 'Selesai' && String(o.transactionDate).includes(todayStr)) {
+                        const dObj = parseAnyDate(o.transactionDate);
+                        if (!isNaN(dObj.getTime())) {
+                            const hr = dObj.getHours();
+                            const idx = hours.findIndex(h => hr <= h);
+                            const targetIdx = idx !== -1 ? idx : hours.length - 1;
+                            
+                            // Hitung margin: Jasa/Pulsa 70%, Fisik 35%
+                            const isService = String(o.itemsList || '').toLowerCase().includes('servis');
+                            const marginRate = isService ? 0.70 : 0.35;
+                            const grossProfit = (Number(o.total) || 0) * marginRate;
+                            profitPoints[targetIdx] += grossProfit;
+                        }
+                    }
+                });
+
+                // 2. Potong Pengeluaran Hari Ini
+                (this.expensesList || []).forEach(e => {
+                    if (String(e.tanggal).includes(todayStr)) {
+                        const dObj = parseAnyDate(e.tanggal);
+                        if (!isNaN(dObj.getTime())) {
+                            const hr = dObj.getHours();
+                            const idx = hours.findIndex(h => hr <= h);
+                            const targetIdx = idx !== -1 ? idx : hours.length - 1;
+                            profitPoints[targetIdx] -= (Number(e.nominal) || 0);
+                        }
+                    }
+                });
+
+            } else if (tf === '1W') {
+                // Timeframe 1W: 7 Hari Terakhir
+                for (let i = 6; i >= 0; i--) {
+                    const d = new Date();
+                    d.setDate(d.getDate() - i);
+                    const dayNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+                    const dayLabel = dayNames[d.getDay()] + ' ' + d.getDate();
+                    labels.push(dayLabel);
+
+                    const dateMatch = d.toLocaleDateString('id-ID');
+                    let dayGrossProfit = 0;
+                    let dayExpense = 0;
+
+                    // Hitung Penjualan Orders
+                    (this.orders || []).forEach(o => {
+                        if (o.statusPesanan === 'Selesai' && String(o.transactionDate).includes(dateMatch)) {
+                            const isService = String(o.itemsList || '').toLowerCase().includes('servis');
+                            dayGrossProfit += (Number(o.total) || 0) * (isService ? 0.70 : 0.35);
+                        }
+                    });
+
+                    // Hitung Custom Orders Selesai
+                    (this.adminCustomOrders || []).forEach(co => {
+                        if (co.status === 'Selesai' && String(co.tanggal).includes(dateMatch)) {
+                            dayGrossProfit += (Number(co.harga) || 0) * 0.60;
+                        }
+                    });
+
+                    // Potong Beban Kas
+                    (this.expensesList || []).forEach(e => {
+                        if (String(e.tanggal).includes(dateMatch)) {
+                            dayExpense += (Number(e.nominal) || 0);
+                        }
+                    });
+
+                    profitPoints.push(Math.round(dayGrossProfit - dayExpense));
+                }
+
+            } else if (tf === '1M') {
+                // Timeframe 1M: 30 Hari Terakhir (Interval 3 Hari agar grafik bersih)
+                for (let i = 28; i >= 0; i -= 3) {
+                    const d = new Date();
+                    d.setDate(d.getDate() - i);
+                    labels.push(d.getDate() + '/' + (d.getMonth() + 1));
+
+                    let blockNet = 0;
+                    // Sampling agregasi
+                    (this.orders || []).forEach(o => {
+                        if (o.statusPesanan === 'Selesai') {
+                            const oDate = parseAnyDate(o.transactionDate);
+                            if (!isNaN(oDate.getTime()) && Math.abs(d.getTime() - oDate.getTime()) <= (2 * 86400000)) {
+                                blockNet += (Number(o.total) || 0) * 0.40;
+                            }
+                        }
+                    });
+                    (this.expensesList || []).forEach(e => {
+                        const eDate = parseAnyDate(e.tanggal);
+                        if (!isNaN(eDate.getTime()) && Math.abs(d.getTime() - eDate.getTime()) <= (2 * 86400000)) {
+                            blockNet -= (Number(e.nominal) || 0);
+                        }
+                    });
+                    profitPoints.push(Math.round(blockNet));
+                }
+
+            } else if (tf === 'YTD') {
+                // Timeframe YTD: Bulanan dari Januari s/d Bulan Berjalan
+                const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+                const curMonth = now.getMonth();
+                const curYear = now.getFullYear();
+
+                for (let m = 0; m <= curMonth; m++) {
+                    labels.push(monthNames[m]);
+                    let mGross = 0;
+                    let mExp = 0;
+
+                    (this.orders || []).forEach(o => {
+                        if (o.statusPesanan === 'Selesai') {
+                            const dObj = parseAnyDate(o.transactionDate);
+                            if (!isNaN(dObj.getTime()) && dObj.getFullYear() === curYear && dObj.getMonth() === m) {
+                                mGross += (Number(o.total) || 0) * 0.40;
+                            }
+                        }
+                    });
+
+                    (this.expensesList || []).forEach(e => {
+                        const dObj = parseAnyDate(e.tanggal);
+                        if (!isNaN(dObj.getTime()) && dObj.getFullYear() === curYear && dObj.getMonth() === m) {
+                            mExp += (Number(e.nominal) || 0);
+                        }
+                    });
+
+                    profitPoints.push(Math.round(mGross - mExp));
+                }
+            }
+
+            // B. HITUNG METRIK FINANCIAL TICKER
+            const total = profitPoints.reduce((sum, v) => sum + v, 0);
+            const high = profitPoints.length > 0 ? Math.max(...profitPoints) : 0;
+            const low = profitPoints.length > 0 ? Math.min(...profitPoints) : 0;
+            const avg = profitPoints.length > 0 ? Math.round(total / profitPoints.length) : 0;
+
+            const firstVal = profitPoints[0] || 0;
+            const lastVal = profitPoints[profitPoints.length - 1] || 0;
+            let growth = 0;
+            if (firstVal !== 0) {
+                growth = Math.round(((lastVal - firstVal) / Math.abs(firstVal)) * 100);
+            } else if (lastVal > 0) {
+                growth = 100;
+            }
+
+            this.profitMetrics = {
+                netProfitTotal: total,
+                growthRate: growth,
+                isBullish: total >= 0 && growth >= 0,
+                high: high,
+                low: low,
+                average: avg
+            };
+
+            this.cachedProfitData = { labels, profitPoints };
+        },
+
+        // 2. RENDER TRADING-STYLE INTERACTIVE CHART (AREA SPLINE GLOW)
+        renderProfitChart() {
+            if (!this.cachedProfitData) this.calculateProfitSeries();
+            const { labels, profitPoints } = this.cachedProfitData;
+            const isBullish = this.profitMetrics.netProfitTotal >= 0;
+
+            const canvas = document.getElementById('chartProfitCanvas');
+            if (!canvas) return;
+
+            if (charts['chartProfitTicker']) {
+                charts['chartProfitTicker'].destroy();
+                delete charts['chartProfitTicker'];
+            }
+
+            const ctx = canvas.getContext('2d');
+            const height = canvas.height || 360;
+            const gradient = ctx.createLinearGradient(0, 0, 0, height);
+
+            if (isBullish) {
+                gradient.addColorStop(0, 'rgba(16, 185, 129, 0.32)');
+                gradient.addColorStop(1, 'rgba(16, 185, 129, 0.00)');
+            } else {
+                gradient.addColorStop(0, 'rgba(244, 63, 94, 0.32)');
+                gradient.addColorStop(1, 'rgba(244, 63, 94, 0.00)');
+            }
+
+            const borderColor = isBullish ? '#059669' : '#e11d48';
+
+            charts['chartProfitTicker'] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Net Profit (Laba Bersih)',
+                        data: profitPoints,
+                        borderColor: borderColor,
+                        borderWidth: 3,
+                        backgroundColor: gradient,
+                        fill: true,
+                        tension: 0.4, // Smooth Spline Curve ala TradingView
+                        pointRadius: 4,
+                        pointHoverRadius: 7,
+                        pointBackgroundColor: borderColor,
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.92)',
+                            titleFont: { family: "'Inter', sans-serif", size: 11, weight: 'bold' },
+                            bodyFont: { family: "'Inter', monospace", size: 13, weight: 'bold' },
+                            padding: 12,
+                            cornerRadius: 12,
+                            displayColors: false,
+                            callbacks: {
+                                label: (context) => {
+                                    const val = context.parsed.y;
+                                    const prefix = val >= 0 ? '✦ Profit Bersih: ' : '⚠ Defisit: ';
+                                    return prefix + new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(val);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            grid: {
+                                color: (ctx) => (ctx.tick.value === 0 ? 'rgba(15, 23, 42, 0.35)' : 'rgba(16, 185, 129, 0.07)'),
+                                lineWidth: (ctx) => (ctx.tick.value === 0 ? 2 : 1),
+                                borderDash: (ctx) => (ctx.tick.value === 0 ? [5, 5] : []) // Garis impas Rp 0 putus-putus
+                            },
+                            ticks: {
+                                color: '#64748b',
+                                font: { family: "'Inter', monospace", size: 10 },
+                                callback: (v) => 'Rp ' + (v / 1000).toLocaleString('id-ID') + 'k'
+                            }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: {
+                                color: '#0f172a',
+                                font: { family: "'Inter', sans-serif", weight: '600', size: 11 }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Sinkronkan ke canvas Fullscreen jika sedang dibuka
+            if (this.profitFullScreen) {
+                this.$nextTick(() => {
+                    const canvasFull = document.getElementById('chartProfitCanvasFull');
+                    if (canvasFull) {
+                        if (charts['chartProfitFull']) charts['chartProfitFull'].destroy();
+                        const ctxFull = canvasFull.getContext('2d');
+                        charts['chartProfitFull'] = new Chart(ctxFull, charts['chartProfitTicker'].config);
+                    }
+                });
+            }
+        },
+
+        // 3. EKSPOR DATA TIME-SERIES PROFIT KE CSV
+        exportProfitCSV() {
+            if (!this.cachedProfitData) this.calculateProfitSeries();
+            const { labels, profitPoints } = this.cachedProfitData;
+            
+            let csv = "sep=;\nTitik Waktu;Net Profit (IDR);Status\n";
+            labels.forEach((l, idx) => {
+                const p = profitPoints[idx] || 0;
+                csv += `"${l}";${p};"${p >= 0 ? 'SURPLUS' : 'DEFISIT'}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `Profit_TimeSeries_${this.profitTimeframe}_PutraBarokah.csv`;
+            link.click();
+
+            this.showToast('success', 'Data Profit Diekspor! 📈', `Berkas CSV rentang ${this.profitTimeframe} berhasil diunduh.`, 'Profit Engine');
+        },
 
                 // 7. Eksekusi Pembayaran Kasir POS (Checkout Instan & Full Sync)
                 async executePosCheckout() {
@@ -14859,6 +15409,32 @@ _Uang fisik di laci telah dihitung dan diserahterimakan untuk shift kasir beriku
                         proTip: 'Arahkan kursor ke atas titik kurva grafik atau bilah batang untuk melihat rincian angka eksak transaksi dan nominal pendapatan per tanggal.',
                         warning: 'Jangan panik jika pendapatan belum bertambah saat pesanan baru masuk; ubah status pesanan menjadi "Selesai" di Manajemen Pesanan agar otomatis terhitung ke pendapatan.'
                     },
+                    profit_ticker: {
+        shortLabel: 'Profit Ticker',
+        icon: 'fa-solid fa-arrow-trend-up',
+        title: 'Panduan Eksekutif: Financial Profit Ticker & Kurva Laba Bersih Murni',
+        summary: 'Pusat instrumen analitik finansial independen bergaya bursa efek untuk memantau fluktuasi laba bersih murni (Net Profit) toko Putra Barokah secara real-time dengan kecepatan kilat (< 1 detik).',
+        steps: [
+            {
+                heading: '1. Pemilihan Timeframe Dinamis (1D, 1W, 1M, YTD)',
+                detail: 'Gunakan tombol 1D untuk melihat jam-jam puncak laba hari ini, tombol 1W untuk evaluasi ritme 7 hari, 1M untuk siklus 30 hari, dan YTD untuk akumulasi pertumbuhan laba tahun berjalan.'
+            },
+            {
+                heading: '2. Membaca Ticker Puncak (High) & Titik Dasar (Low)',
+                detail: 'Header ticker otomatis merangkum titik tertinggi (puncak penjualan), titik terendah (saat pengeluaran kas tinggi), rata-rata laba harian, serta persentase tren pertumbuhan periode.'
+            },
+            {
+                heading: '3. Membaca Garis Impas Putus-Putus (Rp 0 Reference)',
+                detail: 'Garis putus-putus horizontal di tengah menandakan titik Rp 0. Jika kurva berada di atas garis, toko mencatatkan surplus laba bersih; jika kurva turun di bawah garis, toko sedang mengalami defisit harian.'
+            },
+            {
+                heading: '4. Mode Layar Penuh (Cinema Stage)',
+                detail: 'Klik tombol Full View di sudut kanan atas untuk menampilkan grafik melebar memenuhi layar penuh tanpa terganggu menu sidebar, ideal untuk audit keuangan mingguan bersama staf.'
+            }
+        ],
+        proTip: 'Arahkan kursor atau sentuh titik kurva untuk memunculkan tooltip crosshair dengan format rupiah presisi tanpa perlu kalkulator manual.',
+        warning: 'Hanya transaksi yang berstatus "Selesai" yang diakumulasikan ke dalam kurva laba bersih. Pastikan pesanan fisik maupun servis custom telah berstatus selesai.'
+    },
                     customer_analysis: {
                         shortLabel: 'Funnel',
                         icon: 'fa-solid fa-filter-circle-dollar',
@@ -15677,13 +16253,19 @@ _Uang fisik di laci telah dihitung dan diserahterimakan untuk shift kasir beriku
                     } if (tab === 'shift_management') {
                         this.syncShiftLiveMetrics();
                         this.fetchShiftHistory();
-                    }
+                    }} else if (tab === 'profit_ticker') {
+    this.calculateProfitSeries();
+    this.$nextTick(() => {
+        this.renderProfitChart();
+    });
+}
 
 
                 },
 
                 getTabTitle() {
                     if (this.currentTab === 'customer_analysis') return 'Customer Conversion Funnel';
+                    if (this.currentTab === 'profit_ticker') return 'Live Net Profit Ticker & Time-Series Analytics';
                     if (this.currentTab === 'shift_management') return 'Cash Drawer & Shift Settlement';
                     if (this.currentTab === 'crm_analytics') return 'Customer Relationship Management (CRM 360°)';
                     const titles = {
