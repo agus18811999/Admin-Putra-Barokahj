@@ -2212,7 +2212,8 @@
                 </div>
 
                 <!-- Tombol Full View Mode -->
-                <button type="button" @click="profitFullScreen = true" 
+               <!-- Tombol Full View Mode (Ubah @click menjadi openProfitFullScreen()) -->
+                <button type="button" @click="openProfitFullScreen()" 
                         class="w-10 h-10 rounded-2xl bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 border border-emerald-200/90 flex items-center justify-center transition shadow-2xs active:scale-95" 
                         title="Perbesar Layar Penuh (Cinema Stage)">
                     <i class="fa-solid fa-expand text-xs"></i>
@@ -12106,6 +12107,107 @@
                     }
                 });
             }
+        },
+                // BUKA FULLSCREEN & TRIGGER GAMBAR GRAFIK
+        openProfitFullScreen() {
+            this.profitFullScreen = true;
+            this.$nextTick(() => {
+                // Beri jeda 150ms agar animasi modal pop-up selesai dan kanvas memiliki ukuran piksel
+                setTimeout(() => {
+                    this.renderProfitChartFull();
+                }, 150);
+            });
+        },
+
+        // MENGGAMBAR GRAFIK KHUSUS KANVAS FULLSCREEN
+        renderProfitChartFull() {
+            if (!this.cachedProfitData) this.calculateProfitSeries();
+            const { labels, profitPoints } = this.cachedProfitData;
+            const isBullish = this.profitMetrics.netProfitTotal >= 0;
+
+            const canvas = document.getElementById('chartProfitCanvasFull');
+            if (!canvas) return;
+
+            if (charts['chartProfitFull']) {
+                charts['chartProfitFull'].destroy();
+                delete charts['chartProfitFull'];
+            }
+
+            const ctx = canvas.getContext('2d');
+            const height = canvas.clientHeight || 450;
+            const gradient = ctx.createLinearGradient(0, 0, 0, height);
+
+            if (isBullish) {
+                gradient.addColorStop(0, 'rgba(16, 185, 129, 0.35)');
+                gradient.addColorStop(1, 'rgba(16, 185, 129, 0.00)');
+            } else {
+                gradient.addColorStop(0, 'rgba(244, 63, 94, 0.35)');
+                gradient.addColorStop(1, 'rgba(244, 63, 94, 0.00)');
+            }
+
+            const borderColor = isBullish ? '#059669' : '#e11d48';
+
+            charts['chartProfitFull'] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Net Profit (Laba Bersih)',
+                        data: profitPoints,
+                        borderColor: borderColor,
+                        borderWidth: 3.5,
+                        backgroundColor: gradient,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 5,
+                        pointHoverRadius: 8,
+                        pointBackgroundColor: borderColor,
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                            titleFont: { family: "'Inter', sans-serif", size: 12, weight: 'bold' },
+                            bodyFont: { family: "'Inter', monospace", size: 14, weight: 'bold' },
+                            padding: 14,
+                            cornerRadius: 12,
+                            displayColors: false,
+                            callbacks: {
+                                label: (context) => {
+                                    const val = context.parsed.y;
+                                    const prefix = val >= 0 ? '✦ Profit Bersih: ' : '⚠ Defisit: ';
+                                    return prefix + new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(val);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            grid: {
+                                color: (ctx) => (ctx.tick.value === 0 ? 'rgba(15, 23, 42, 0.4)' : 'rgba(16, 185, 129, 0.08)'),
+                                lineWidth: (ctx) => (ctx.tick.value === 0 ? 2 : 1),
+                                borderDash: (ctx) => (ctx.tick.value === 0 ? [5, 5] : [])
+                            },
+                            ticks: {
+                                color: '#64748b',
+                                font: { family: "'Inter', monospace", size: 11 },
+                                callback: (v) => 'Rp ' + (v / 1000).toLocaleString('id-ID') + 'k'
+                            }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#0f172a', font: { family: "'Inter', sans-serif", weight: 'bold', size: 11 } }
+                        }
+                    }
+                }
+            });
         },
 
         // 3. EKSPOR DATA TIME-SERIES PROFIT KE CSV
