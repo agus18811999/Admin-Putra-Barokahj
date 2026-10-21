@@ -16253,7 +16253,7 @@ _Uang fisik di laci telah dihitung dan diserahterimakan untuk shift kasir beriku
                     } if (tab === 'shift_management') {
                         this.syncShiftLiveMetrics();
                         this.fetchShiftHistory();
-                    }} else if (tab === 'profit_ticker') {
+                    }} if (tab === 'profit_ticker') {
     this.calculateProfitSeries();
     this.$nextTick(() => {
         this.renderProfitChart();
