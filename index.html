@@ -16238,31 +16238,41 @@ _Uang fisik di laci telah dihitung dan diserahterimakan untuk shift kasir beriku
 
                 switchTab(tab) {
                     this.currentTab = tab;
-                    if (tab === 'dashboard') {
-                        // Render ulang chart ketika pindah ke tab dashboard (memberikan waktu rendering HTML)
-                        this.$nextTick(() => { this.renderCharts(); });
-                    } else if (tab === 'manage_ads') {
-                        this.fetchPopupSettings();
-                        // Di dalam switchTab(tab) admin.html:
-                    } else if (tab === 'flash_sale') {
-                        this.fetchAdminFlashSale();
-                    } if (tab === 'customer_analysis') {
-                        this.startFunnelLivePolling(); // <-- Mulai sinkronisasi 1.5 detik
+
+                    // 1. Pengendali Polling Funnel (Aman & Terpisah)
+                    if (tab === 'customer_analysis') {
+                        if (typeof this.startFunnelLivePolling === 'function') {
+                            this.startFunnelLivePolling();
+                        }
                     } else {
-                        this.stopFunnelLivePolling();  // <-- Matikan saat di tab lain agar hemat memori
-                    } if (tab === 'shift_management') {
-                        this.syncShiftLiveMetrics();
-                        this.fetchShiftHistory();
-                    } if (tab === 'profit_ticker') {
-    this.calculateProfitSeries();
-    this.$nextTick(() => {
-        this.renderProfitChart();
-    });
-}
+                        if (typeof this.stopFunnelLivePolling === 'function') {
+                            this.stopFunnelLivePolling();
+                        }
+                    }
 
-
+                    // 2. Rantai Aksi Antar Tab (Rapi & Tidak Tabrakan)
+                    if (tab === 'dashboard') {
+                        this.$nextTick(() => { 
+                            if (typeof this.renderCharts === 'function') this.renderCharts(); 
+                        });
+                    } else if (tab === 'manage_ads') {
+                        if (typeof this.fetchPopupSettings === 'function') this.fetchPopupSettings();
+                    } else if (tab === 'flash_sale') {
+                        if (typeof this.fetchAdminFlashSale === 'function') this.fetchAdminFlashSale();
+                    } else if (tab === 'shift_management') {
+                        if (typeof this.syncShiftLiveMetrics === 'function') this.syncShiftLiveMetrics();
+                        if (typeof this.fetchShiftHistory === 'function') this.fetchShiftHistory();
+                    } else if (tab === 'profit_ticker') {
+                        if (typeof this.calculateProfitSeries === 'function') {
+                            this.calculateProfitSeries();
+                        }
+                        this.$nextTick(() => {
+                            if (typeof this.renderProfitChart === 'function') {
+                                this.renderProfitChart();
+                            }
+                        });
+                    }
                 },
-
                 getTabTitle() {
                     if (this.currentTab === 'customer_analysis') return 'Customer Conversion Funnel';
                     if (this.currentTab === 'profit_ticker') return 'Live Net Profit Ticker & Time-Series Analytics';
